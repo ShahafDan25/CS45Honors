@@ -1,0 +1,29 @@
+.upperBody
+{
+    text-align: center;
+    height: 20% !important;
+    width: 100%;
+    padding-bottom: 3%;
+}
+body
+{
+    background-image: linear-gradient(  rgb(235, 154, 154), rgb(207, 73, 73)) !important;
+    text-align: center;
+}
+.objectives
+{
+    padding-left: 35% !important;
+    padding-right: 35% !important;
+
+}
+.sep
+{
+    width: 80% !important;
+}
+.option_a, .option_b, .option_c
+{
+    display: inline-block !important;
+    width: 30% !important;
+    padding-right: 4% !important;
+    padding-left: 4% !important;
+}
