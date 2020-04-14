@@ -41,7 +41,7 @@
             <hr class = "sep" size = "10">
             <div class = "lowerBody">
                 <br><br>
-                    <span class = "inline">
+                    <span>
                         <div class = "option_a">
                             <h3> Leave Feedback </h3>
                             <button class = "btn btn-warning" data-toggle = "collapse" data-target = "#leaveFeedback"> Go To Form </button>
@@ -58,11 +58,14 @@
                         </div>
                     </span> <!-- END OF INLINE OBJECTS -->
                     <br> <br> <hr class = "sep"> <br>
-                    <div id = "leaveFeedback" class = "collapse">
+                    <div id = "leaveFeedback" class = "collapse centrize">
                         <h4> Fill out the form below to leave a feeback </h4>
+                        <p> Choose a professor from the below dropdown, or else insert his information </p>
+                        <br><hr class = "sep"><br>
+                        <h4> Choose a Professor </h4>
                         <form class = "optionForm">
-                            <p> Choose a professor from the below dropdown, or else insert his information </p>
-                            <select class = "btn browser-default" name = "profSelected">
+                            
+                            <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
                                 <option>SELECT A PROFESSOR</option>
                                 <!--
                                     <?php
@@ -70,18 +73,32 @@
                                     ?>
                                 -->
                             </select>
+                            &nbsp;
+                            <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
                             
+                        </form>
+                        <br><hr class = "sep"><br>
+                        <h4> Feedback New Professor </h4>
+                        <form class = "optionForm">
+                            <input type = "text" placeholder = "First Name" required name = "firstname" class = "btn btn-input sideMargger5">
+                            <input type = "text" placeholder = "Last Name" required name = "lastname" class = "btn btn-input sideMargger5"><br><br>
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" required> I had a class with this instructor
+                            </label>
+                            <br> <!-- SAFE NICE SPACING -->
+                            <button class = "btn btn-success sideMargger5 sidePadder5"> SUBMIT </button>
                         </form>
                     </div>
 
-                    <div id = "readFeedback" class = "collapse">
+                    <div id = "readFeedback" class = "collapse centize">
                         <h4> Choose a professor from the drop down to read feebacks</h4>
                     </div>
 
-                    <div id = "planner" class = "collapse">
+                    <div id = "planner" class = "collapse centrize">
                         <h4> Plan your own academic path! </h4>
                     </div>
                 <br>
             </div>
+            
         </body>
     </html>
