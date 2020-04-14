@@ -16,6 +16,10 @@ body
     padding-right: 35% !important;
 
 }
+.btn
+{
+    border: 1px solid black !important;
+}
 .sep
 {
     width: 80% !important;
