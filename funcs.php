@@ -19,6 +19,33 @@
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function populateProfDropdown()
+    {
+        $data = "";
+
+        $sql = "SELECT FirstName, LastName FROM Instructors";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        while($row = $stmt -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option>".$row['FirstName']."  ".$row['LastName']."</option>";
+        }
+        return $data;
+    }
+
+    function populateProfDropdown()
+    {
+        $data = "";
+
+        $sql = "SELECT Code, Name FROM Subjects";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        while($row = $stmt -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option>".$row['Name']."  ( ".$row['Code']." ) </option>";
+        }
+        return $data;
+    }
 
     function insertProfessor($c, $f, $l, $t)
     {
