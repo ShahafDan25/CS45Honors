@@ -11,36 +11,49 @@
         else $taken = false;
         insertProfessor($c, $fn, $ln, $taken);
         //return to page - CHANGE TO INDEX.PHP LATER
-        echo '<script>location.replace("index.html");</script>';
+        echo '<script>location.replace("index.php");</script>';
     }
    
-   
+    if($_POST['message'] == "feedAboutProf")
+    {
+        $p = $_POST['profSelected'];
+        updateProfFeed($c, $p);
+        echo '<script>location.replace("comment.php");</script>';
+
+    }
    
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
-    function populateProfDropdown()
+    function updateProfFeed($c, $p)
+    {
+        $sql = "UPDATE Instructors SET Comment = 1 WHERE ID = ".$p;
+        $stmt = $conn -> prepare($sql);
+        $stmt -> execute();
+        return;
+    }
+    function populateProfDropdown($c)
     {
         $data = "";
 
-        $sql = "SELECT FirstName, LastName FROM Instructors";
+        $sql = "SELECT FirstName, LastName, ID FROM Instructors";
         $s = $c -> prepare($sql);
         $s -> execute();
-        while($row = $stmt -> fetch(PDO::FETCH_ASSOC))
+        while($row = $s -> fetch(PDO::FETCH_ASSOC))
         {
-            $data .= "<option>".$row['FirstName']."  ".$row['LastName']."</option>";
+            $data .= "<option value = ".$row['ID'].">".$row['FirstName']."  ".$row['LastName']."</option>";
         }
         return $data;
     }
 
-    function populateProfDropdown()
+    function populateMajorDropdown($c)
     {
         $data = "";
 
         $sql = "SELECT Code, Name FROM Subjects";
         $s = $c -> prepare($sql);
         $s -> execute();
-        while($row = $stmt -> fetch(PDO::FETCH_ASSOC))
+        while($row = $s -> fetch(PDO::FETCH_ASSOC))
         {
             $data .= "<option>".$row['Name']."  ( ".$row['Code']." ) </option>";
         }
@@ -49,7 +62,7 @@
 
     function insertProfessor($c, $f, $l, $t)
     {
-        $sql = "INSERT INTO Instructors (FirstName, LastName) VALUES ('".$f."', '".$d."');";
+        $sql = "INSERT INTO Instructors (FirstName, LastName) VALUES ('".$f."', '".$l."');";
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c->exec($sql);
         //add echo script to go to comment page

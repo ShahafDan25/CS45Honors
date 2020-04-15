@@ -55,7 +55,27 @@ body
     margin-left: 5% !important;
 }
 .increaseHeight {height: 2.0vw !important;}
-.btn-input
+.btn-input{background-color: #ECF6F9 !important;}
+.checkboxer
 {
-    background-color: #ECF6F9;
+    background-color: bisque;
+    padding-right: 1% !important;
+    padding-left: 1% !important;
+    margin-right: 1% !important;
+    margin-left: 1% !important;
+}
+.btnSelect
+{
+    height: 2vw !important;
+    background-color:  ;
+}
+.commentForm
+{
+    border-radius: 5px;
+    border: 1px solid black;
+    border-bottom: 3px solid black;
+    padding: 1.5% !important;
+    background-color: white;
+    margin-right: 22% !important;
+    margin-left: 22% !important;
 }
