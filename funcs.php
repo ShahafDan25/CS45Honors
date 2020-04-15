@@ -1,6 +1,34 @@
 <?php
-    function connDB()
+    // ----------------------------------- //
+    // ----------- POSTS ----------------- //
+    // ----------------------------------- //
+    if($_POST['message'] == "insertProfessor")
     {
+        $c = connDB();
+        $fn = $_POST['firstname'];
+        $ln = $_POST['lastname'];
+        if(empty($_POST['taken'])) $taken = true;
+        else $taken = false;
+        insertProfessor($c, $fn, $ln, $taken);
+        //return to page - CHANGE TO INDEX.PHP LATER
+        echo '<script>location.replace("index.html");</script>';
+    }
+   
+   
+   
+    // ----------------------------------- //
+    // ---------- FUNCTIONS -------------- //
+    // ----------------------------------- //
+
+    function insertProfessor($c, $f, $l, $t)
+    {
+        $sql = "INSERT INTO Instructors (FirstName, LastName) VALUES ('".$f."', '".$d."');";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
+        //add echo script to go to comment page
+    }
+
+   function connDB() {
         //CONNECTION ESTABLISHMENT TO LOCAL HOST
         $username = "root";
         $password = "MMB3189@A";
