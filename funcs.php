@@ -34,14 +34,30 @@
         insertComment($c, $anno, $course, $term, $year, $grade, $comment);
     }
    
+    if($_POST['message'] == 'insertNewProf')
+    {
+        $f = $_POST['firstName'];
+        $l = $_POST['lastName'];
+        $d = $_POST['dept'];
+        $c = connDB();
+        insertNewProf($c, $f, $l, $d);
+    }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function insertNewProf($c, $f, $l, $d)
+    {
+        $sql = "INSERT INTO Instructors (FirstName, LastName, Subjects_Code) VALUES('".$f."', '".$l."', '".$d."');";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
+        return;
+    }
+
     function insertComment($c, $a, $co, $t, $y, $g, $com)
     {
         //first: retrieve professor ID
         $sql = "SELECT ID FROM Instructors WHERE Comment = 1";
-        $s = $c -> prepare();
+        $s = $c -> prepare($sql);
         $s -> execute();
         
 

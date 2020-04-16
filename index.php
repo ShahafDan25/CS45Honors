@@ -26,9 +26,7 @@
 
         <body>
             <div class = "upperBody">
-                <span style = "display:inline-block;">
-
-                </span>
+                <button class = "pull-left btn btn-into" onclick = "goToAdmin()"> ADMIN </button>
                 <br>
                 <h2> Rate My Professor </h2>
                 <h4> Las Positas College </h4> <br>

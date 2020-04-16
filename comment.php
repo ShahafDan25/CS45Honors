@@ -37,7 +37,7 @@
         <body>
             <br>
             <button class = "btn btn-info pull-left sideMargger5" onclick = backHome()> HOME PAGE </button>
-            <h2> Comment about your experience with </h2> <?php echo $prof; ?>
+            <h2> Comment about your experience with <?php echo $prof; ?></h2> 
             <br><hr class = "sep"><br>
             <form action = "funcs.php" method = "post" class = "commentForm">
                 <label class="btn checkboxer">
@@ -48,7 +48,7 @@
                     <input id = "nameField" type = "text" name = "commenterName" class = "btn btn-input increaseHeight" disabled>
                 </label>
                 <br><br>
-                <p> Choose the class in which you were a student of </p><?php echo $prof; ?><p>? </p>
+                <p> Choose the class in which you were a student of <?php echo $prof; ?> ?</p>
                 <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required>
                     <option> SELECT A COURSE </option>
                     <?php echo populateMajorDropdown($c); ?>

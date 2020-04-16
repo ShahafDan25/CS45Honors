@@ -38,13 +38,6 @@ body
     width: 100% !important;
     text-align: center;
 }
-.textplace
-{
-    border: 1px solid black !important;
-    border-radius: 3px !important;
-    background-color: bisque !important;
-    width: 200% !important;
-}
 .centrize
 {
     text-align: center;
@@ -85,4 +78,22 @@ body
     background-color: white;
     margin-right: 22% !important;
     margin-left: 22% !important;
+}
+.thinner
+{
+    width: 60% !important;
+    margin-left: 25% !important;
+    margin-right: 25% !important;
+}
+
+/* ---------------------------------------------
+** ------------- ADMIN.PHP ---------------------
+** ------------------------------------------ */
+
+.selectCourse
+{
+    background-color: white;
+    border-radius: 5px !important;
+    border: 1.5px solid black !important;
+
 }
