@@ -46,7 +46,7 @@
         
 
         //second: insert comment with that ID
-        $sql = "INSERT INTO Comments () VALUES ()"
+        $sql = "INSERT INTO Comments () VALUES ()";
     }
     
     function updateProfFeed($c, $p)
