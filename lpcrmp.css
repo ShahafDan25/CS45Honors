@@ -38,6 +38,13 @@ body
     width: 100% !important;
     text-align: center;
 }
+.textplace
+{
+    border: 1px solid black !important;
+    border-radius: 3px !important;
+    background-color: bisque !important;
+    width: 200% !important;
+}
 .centrize
 {
     text-align: center;
@@ -67,7 +74,7 @@ body
 .btnSelect
 {
     height: 2vw !important;
-    background-color:  ;
+    /* background-color:  ; */
 }
 .commentForm
 {

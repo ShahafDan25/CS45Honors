@@ -4,12 +4,11 @@
     // ----------------------------------- //
     if($_POST['message'] == "insertProfessor")
     {
-        $c = connDB();
         $fn = $_POST['firstname'];
         $ln = $_POST['lastname'];
         if(empty($_POST['taken'])) $taken = true;
         else $taken = false;
-        insertProfessor($c, $fn, $ln, $taken);
+        insertProfessor(connDB(), $fn, $ln, $taken);
         //return to page - CHANGE TO INDEX.PHP LATER
         echo '<script>location.replace("index.php");</script>';
     }
@@ -17,19 +16,48 @@
     if($_POST['message'] == "feedAboutProf")
     {
         $p = $_POST['profSelected'];
-        updateProfFeed($c, $p);
+        updateProfFeed(connDB(), $p);
         echo '<script>location.replace("comment.php");</script>';
 
+    }
+
+    if($_POST['message'] == 'commentary')
+    {
+        $c = connDB();
+        if($_POST['annoStatus'] == "anno") $anno = "Anonymously";
+        else $anno = $_POST['commenterName'];
+        $course = $_POST['courseTaken'];
+        $term = $_POST['termTaken'];
+        $year = $_POST['yearTaken'];
+        $grade = $_POST['grade'];
+        $comment = $_POST['comment'];
+        insertComment($c, $anno, $course, $term, $year, $grade, $comment);
     }
    
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function insertComment($c, $a, $co, $t, $y, $g, $com)
+    {
+        //first: retrieve professor ID
+        $sql = "SELECT ID FROM Instructors WHERE Comment = 1";
+        $s = $c -> prepare();
+        $s -> execute();
+        
+
+        //second: insert comment with that ID
+        $sql = "INSERT INTO Comments () VALUES ()"
+    }
+    
     function updateProfFeed($c, $p)
     {
         $sql = "UPDATE Instructors SET Comment = 1 WHERE ID = ".$p;
-        $stmt = $conn -> prepare($sql);
-        $stmt -> execute();
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        //update everyone elses
+        $sql2 = "UPDATE Instructors SET Comment = 0 WHERE NOT ID = ".$p;
+        $s2 = $c -> prepare($sql2);
+        $s2 -> execute();
         return;
     }
     function populateProfDropdown($c)
@@ -66,6 +94,19 @@
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c->exec($sql);
         //add echo script to go to comment page
+    }
+
+    function populateYearDropdown($c)
+    {
+        $data = "";
+        $sql = "SELECT DISTINCT Year FROM Courses_have_Instructors";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        while($row = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option>".$row['Year']."</option>";
+        }
+        return;
     }
 
    function connDB() {
