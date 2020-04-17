@@ -9,6 +9,9 @@
              <!-- Bootstrap for CSS -->
              <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             
+            <!-- LINK TO OUR JS CODE -->
+            <script src = "lpcrmp.js"></script> 
+
             <!-- CSS HARDCODE FILE LINK -->
             <link rel="stylesheet" type="text/css" href="lpcrmp.css"> 
 
@@ -26,17 +29,17 @@
 
         <body>
             <div class = "upperBody">
-                <button class = "pull-left btn btn-into" onclick = "goToAdmin()"> ADMIN </button>
                 <br>
-                <h2> Rate My Professor </h2>
-                <h4> Las Positas College </h4> <br>
+                <button class = "pull-left btn btn-info " onclick = goToAdmin()> ADMIN </button>
+                <br>
+                <h2 > Rate My Professor </h2>
+                <h4> Las Positas College </h4> 
                 <ul class = "objectives">
                     <li> Leave a feedback about an instructor! </li>
                     <li> Learn about your professors at LPC! </li>
                     <li> Design and establish an academic path at LPC! </li>
                 </ul>
-            </div>
-            <br>
+            </div><br><br><br>
             <hr class = "sep" size = "10">
             <div class = "lowerBody">
                 <br><br>

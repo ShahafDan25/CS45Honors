@@ -40,8 +40,16 @@
         $l = $_POST['lastName'];
         $d = $_POST['dept'];
         $c = connDB();
-        insertNewProf($c, $f, $l, $d);
+        insertNewProf($c, $f, $l, $d); //insert to db
+        echo '<script>location.replace("admin.php")</script>';; //go back to admin page
     }
+
+    if($_POST['message'] == 'insertNewCourse')
+    {
+        $c = connDB();
+        
+    }
+
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
@@ -99,7 +107,7 @@
         $s -> execute();
         while($row = $s -> fetch(PDO::FETCH_ASSOC))
         {
-            $data .= "<option>".$row['Name']."  ( ".$row['Code']." ) </option>";
+            $data .= "<option value = '".$row['Code']."'>".$row['Name']."  ( ".$row['Code']." ) </option>";
         }
         return $data;
     }
@@ -125,7 +133,8 @@
         return;
     }
 
-   function connDB() {
+   function connDB() 
+   {
         //CONNECTION ESTABLISHMENT TO LOCAL HOST
         $username = "root";
         $password = "MMB3189@A";

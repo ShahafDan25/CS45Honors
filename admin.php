@@ -38,10 +38,10 @@
                 <h3>INSERT A NEW INSTRUCTOR TO THE DATABASE</h3>
                 <br>
                 <form action = "funcs.php" method = "post" class = "commentForm">
-                    <input type = "text" placeholder= "firstName" name = "firstname" class = "btn btn-input">
-                    <input tpye = "text" placeholder= "lastName" name = "lastName" class = "btn btn-input"><br><br>
+                    <input type = "text" placeholder= "First Name" name = "firstName" class = "btn btn-input">
+                    <input tpye = "text" placeholder= "Last Name" name = "lastName" class = "btn btn-input"><br><br>
                     <p class = "inline">Select Their <strong>Department</strong>:</p>
-                    <select class = "btn btn-input inline" name = "dept">
+                    <select class = "btn btn-input inline" name = "dept" required>
                         <option>SELECT A SUBJECT</option>
                         <!-- PHP CODE TO POPULATE -->
                         <?php
@@ -63,7 +63,8 @@
                             echo populateMajorDropdown(connDB());
                         ?>
                     </select> <br><br>
-                    <input type = "text" name = "courseNumber" placeholder="Course Number" class = "btn btn-input"><br>
+                    <input type = "text" name = "courseNumber" placeholder="Course Number" class = "btn btn-input">
+                    <input type = "text" name = "courseName" placeholder = "class name" class = "btn btn-input"><br>
                     <input type = "hidden" name = "message" value = "insertNewCourse"><br>
                     <button class = "btn btn-success sidePadder5">SUBMIT</button>
                 </form>
