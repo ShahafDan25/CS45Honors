@@ -14,7 +14,22 @@
         echo '<script>location.replace("index.php");</script>';
     }
    
-    $if($_POST['message'] == "insert ")
+    if($_POST['message'] == "commentary")
+    {
+        $a = "";
+        if($_POST['annoStatus'] == "anno") $a = "Anonymous";
+        else $a = $_POST['commenterName'];
+        $subject = $_POST['subjectTaken'];
+        $class = $_POST['courseTaken'];
+        $term = $_POST['termTaken'];
+        $year = $_POST['yearTaken'];
+        $grade = $_POST['grade'];
+        $comment = $_POST['comment'];
+        date_default_timezone_set("America/Los_Angeles"); /// set time zone
+        $datetimestamp = date ("Y-m-d H:i:s"); //current time in that time zone
+        comment(connDB(), $grade, $comment, $a, $term, $year, $datetimestamp, $subject, $class);
+        echo '<script>alert("Comment Succesfully Stored!");location.replace("index.php");</script>';
+    }
 
     if($_POST['message'] == "feedAboutProf")
     {
@@ -28,19 +43,6 @@
     {
         updateProfRead(connDB(), $_POST['profSelected']);
         echo '<script>location.replace("read.php");</script>';
-    }
-
-    if($_POST['message'] == 'commentary')
-    {
-        $c = connDB();
-        if($_POST['annoStatus'] == "anno") $anno = "Anonymously";
-        else $anno = $_POST['commenterName'];
-        $course = $_POST['courseTaken'];
-        $term = $_POST['termTaken'];
-        $year = $_POST['yearTaken'];
-        $grade = $_POST['grade'];
-        $comment = $_POST['comment'];
-        insertComment($c, $anno, $course, $term, $year, $grade, $comment);
     }
    
     if($_POST['message'] == 'insertNewProf')
@@ -85,6 +87,26 @@
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    
+    function comment($c, $g, $text, $a, $t, $y, $dt, $subject, $course)
+    {
+        $sql1 = "SELECT ID FROM Instructors WHERE Comment = 1";
+        $s = $c -> prepare($sql1);
+        $s -> execute();
+        $r = $s -> fetch(PDO::FETCH_ASSOC);
+        $idi = $r['ID'];
+        $sql2 = "SELECT MAX(ID)+1 FROM Comments;";
+        $s = $c -> prepare($sql2);
+        $s -> execute();
+        $max = $s -> fetchColumn();
+
+        $sql = "INSERT INTO Comments (ID, Grade, TEXT, Name, Term, Year, DateTimeStamp, Courses_Number, Courses_Subjects_Code, Instructors_ID) VALUES (".$max.",'".$g."', '".$text."', '".$a."', '".$t."', ".$y.", '".$dt."', ".$course.", '".$subject."', ".$idi.");";
+
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c -> exec($sql);
+        return;
+    }
+
     function updateProfRead($c, $p)
     {   
         $sql = "UPDATE Instructors SET Reader = 0;";
@@ -133,18 +155,6 @@
         $c->exec($sql);
         return;
     }
-
-    function insertComment($c, $a, $co, $t, $y, $g, $com)
-    {
-        //first: retrieve professor ID
-        $sql = "SELECT ID FROM Instructors WHERE Comment = 1";
-        $s = $c -> prepare($sql);
-        $s -> execute();
-        
-
-        //second: insert comment with that ID
-        $sql = "INSERT INTO Comments () VALUES ()";
-    }
     
     function updateProfFeed($c, $p)
     {
@@ -167,11 +177,6 @@
         //add echo script to go to comment page
     }
 
-    function insertComment()
-    {
-
-        return;
-    }
 
 
 
@@ -264,7 +269,7 @@
 
     function populateChosenSubjectNumber($c)
     {
-        $sql = "SELECT Number, Name FROM Courses WHERE Subject_Code = (SELECT Code FROM Subjects WHERE chsoen = 1);";
+        $sql = "SELECT Number, Name FROM Courses;";
         $s = $c -> prepare($sql);
         $s -> execute();
         $data = "";

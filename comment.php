@@ -49,19 +49,21 @@
                 </label>
                 <br><br>
                 <p> Choose the class in which you were a student of <?php echo $prof; ?> ?</p>
+                <select name = "subjectTaken" class = "inline sideMargger5 btnSelect" required>
+                    <option> SELECT A SUBJECT </option>
+                    <?php echo populateMajorDropdown($c); ?>
+                </select>
                 <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required>
                     <option> SELECT A COURSE </option>
-                    <?php echo populateMajorDropdown($c); ?>
+                    <?php echo populateChosenSubjectNumber($c); ?>
                 </select>
                 <select name = "termTaken" class = "inline sideMargger5 btnSelect" required>
                     <option> SELECT A TERM </option>
-                    <option> Fall </option>
-                    <option> Spring </option>
-                    <option> Summer </option>
+                    <?php echo popTerms()?>
                 </select>
                 <select name = "yearTaken" class = "inline sideMargger5 btnSelect" required>
                     <option> CHOOSE A YEAR </option>
-                    <?php echo populateYearDropdown($c);?>
+                    <?php echo popYears();?>
                 </select>
                 <br><br><br>
                 <p> What was your final grade in this class?</p>
