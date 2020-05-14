@@ -63,6 +63,12 @@
         echo '<script>location.replace("admin.php");</script>';
     }
 
+    if($_POST['message'] == "logincheck")
+    {
+        if(checkcredentials(connDB(), $_POST['un'], $_POST['pw'])) echo '<script>location.replace("index.php");</script>';
+        else echo '<script>alert("Error, Wrong Credentials"); location.replace("login.html");</script>';
+    }
+
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
