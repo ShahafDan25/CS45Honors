@@ -57,15 +57,22 @@
         echo '<script>location.replace("admin.php");</script>';
     }
 
+    if($_POST['message'] == "addExists")
+    {
+        courseLog(connDb(), $_POST['subject'], $_POST['number'], $_POST['prof'], $_POST['term'], $_POST['year']);
+        echo '<script>location.replace("admin.php");</script>';
+    }
+
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
 
 
-    function courseLog($c, $number, $subject, $y, $t, $p)
+    function courseLog($c, $subject, $number, $prof, $term, $year)
     {
-        $sql = "INSERT INTO ProfCourse VALUES (".$number.", '".$subject."', ".$p.", '".$t."', ".$y.")";
-        $c -> prepare($sql) -> execute();
+        $sql = "INSERT INTO ProfCourse VALUES (".$number.", '".$subject."', ".$prof.", '".$term."', ".$year.")";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
         return;
     }
     
@@ -124,6 +131,33 @@
 
 
     /// ----------------- POPULATORS ---------------------///
+    
+    function populateALlSubjects($c)
+    {
+        $data = "";
+        $sql = "SELECT * FROM Subjects";
+        $s = $c ->prepare($sql);
+        $s -> execute();
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option value = ".$r['Code'].">".$r['Name']." [ ".$r['Code']." ]  </option>";
+        }
+        return $data;    
+    }
+
+    function populateAllClasses($c)
+    {
+        $data = "";
+        $sql = "SELECT * FROM Courses";
+        $s = $c ->prepare($sql);
+        $s -> execute();
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option value = ".$r['Number'].">".$r['Name']." [ ".$r['Subjects_Code']." ".$r['Number']." ]  </option>";
+        }
+        return $data;    
+    }
+
     function populateYearDropdown($c)
     {
         $data = "";

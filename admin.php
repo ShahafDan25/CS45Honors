@@ -101,9 +101,13 @@
         <div class = "collapse" id = "existClass">
             <h3> ADD AN EXISTING CLASS TO AN ACADEMIC TERM </h3><br>
             <form action = "funcs.php" method = "post" class = "commentForm">
-                <select class = "btn btn-input" name= "number" required><?php echo populateAllClasses(connDB()); ?></select>
-                <br>
-                <select class = "btn btn-input" name = "prof" required><?php echo populateProfDropdown(connDb()); ?></select>
+                <select class = "btn btn-input inline" name= "subject" required><?php echo populateAllSubjects(connDB()); ?></select>
+                <select class = "btn btn-input inline" name= "number" required><?php echo populateAllClasses(connDB()); ?></select>
+                <select class = "btn btn-input inline" name = "prof" required><?php echo populateProfDropdown(connDB()); ?></select>
+                <br><br>
+                <select class = "btn btn-input inline" name = "term" required><?php echo popTerms(); ?></select>
+                <select class = "btn btn-input inline" name = "year" required><?php echo popYears(); ?></select>
+                <br><br>
                 <input type = "hidden" value = "addExists" name = "message">
                 <button class = "btn btn-success sidePadder5"> SUBMIT </button>
             </form> 
@@ -111,13 +115,3 @@
         </div>  
     </body>
 </html>
-
-<?php
-    function updateChosenSubject($c, $subject)
-    {
-        $sql = "UPDATE Subjects SET chosen = 0;";
-        $sql .= "UPDATE Subjects SET chosen = 1 WHERE Code = '".$subject."';";
-        $c -> prepare($sql) -> execute();
-        return;
-    }
-?>
