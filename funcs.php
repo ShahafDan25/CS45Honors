@@ -14,12 +14,20 @@
         echo '<script>location.replace("index.php");</script>';
     }
    
+    $if($_POST['message'] == "insert ")
+
     if($_POST['message'] == "feedAboutProf")
     {
         $p = $_POST['profSelected'];
         updateProfFeed(connDB(), $p);
         echo '<script>location.replace("comment.php");</script>';
 
+    }
+
+    if($_POST['message'] == "readAboutProf")
+    {
+        updateProfRead(connDB(), $_POST['profSelected']);
+        echo '<script>location.replace("read.php");</script>';
     }
 
     if($_POST['message'] == 'commentary')
@@ -77,6 +85,13 @@
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function updateProfRead($c, $p)
+    {   
+        $sql = "UPDATE Instructors SET Reader = 0;";
+        $sql .= "UPDATE Instructors SET Reader = 1 WHERE ID = ".$p.";";
+        $c -> prepare($sql) -> execute();
+        return;
+    }
     function checkcredentials($c, $m, $p)
     {
         //verify password is correct for the given email address
@@ -110,8 +125,6 @@
         $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."' )";
         return;
     }
-
-
     
     function insertNewProf($c, $f, $l, $d)
     {
@@ -154,7 +167,11 @@
         //add echo script to go to comment page
     }
 
+    function insertComment()
+    {
 
+        return;
+    }
 
 
 
@@ -256,5 +273,21 @@
             $data .= '<option value = '.$r["Number"].'>'.$r['Number'].' [ '.$r["Name"].' ] </option>';
         }
         return $data;
+    }
+
+    function populateCommentTable($c)
+    {
+        $sql = "SELECT Name, TEXT, DateTimeStamp FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1);";
+        $s = $c ->prepare($sql);
+        $s -> execute();
+        $table = "";
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $table .= '<tr><td>'.$r['Name'].'</td>';
+            $table .= '<td>'.$r['TEXT'].'</td>';
+            $table .= '<td>'.$r['DateTimeStamp'].'</td>';
+            $table .= '</tr>';
+        }
+        echo $table;
     }
 ?>

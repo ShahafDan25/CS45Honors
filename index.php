@@ -102,7 +102,7 @@
                             
                             <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
                                 <option>SELECT A PROFESSOR</option>
-                                
+            
                                     <?php
                                         echo populateProfDropdown(connDB());
                                     ?>

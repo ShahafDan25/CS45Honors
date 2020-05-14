@@ -131,3 +131,17 @@ body
     margin-top: 5% !important;
     margin-bottom: 1% !important;
 }
+
+/* ---------------------------------------------
+** ------------- READ.PHP ---------------------
+** ------------------------------------------ */
+.commentTable
+{
+    background-color: white;
+    border: 3px solid black;
+    /* /width: 80% !important; */
+    padding-right: 3% !important;
+    padding-left: 3% !important;
+    padding-top: 1.5% !important;
+    
+}
