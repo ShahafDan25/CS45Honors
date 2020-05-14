@@ -1,4 +1,5 @@
 <?php
+    include "conndb.php";
     // ----------------------------------- //
     // ----------- POSTS ----------------- //
     // ----------------------------------- //
@@ -46,13 +47,36 @@
 
     if($_POST['message'] == 'insertNewCourse')
     {
-        $c = connDB();
-        
+        newCourse(connDb(), $_POST['courseName'], $_POST['courseNumber']. $_POST['subject']);
+        //courseLog(connDb(), $_POST['courseNumber'], $_POST['subject'], $_POST['year'], $_POST['term'], $_['prof']);
+    }
+
+    if($_POST['message'] == "chooseSubject")
+    {
+        updateChosenSubject(connDb(), $_POST['subject']);
+        echo '<script>location.replace("admin.php");</script>';
     }
 
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+
+
+    function courseLog($c, $number, $subject, $y, $t, $p)
+    {
+        $sql = "INSERT INTO ProfCourse VALUES (".$number.", '".$subject."', ".$p.", '".$t."', ".$y.")";
+        $c -> prepare($sql) -> execute();
+        return;
+    }
+    
+    function newCourse($c, $name, $number, $subject)
+    {
+        $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."' )";
+        return;
+    }
+
+
+    
     function insertNewProf($c, $f, $l, $d)
     {
         $sql = "INSERT INTO Instructors (FirstName, LastName, Subjects_Code) VALUES('".$f."', '".$l."', '".$d."');";
@@ -84,6 +108,34 @@
         $s2 -> execute();
         return;
     }
+
+
+    function insertProfessor($c, $f, $l, $t)
+    {
+        $sql = "INSERT INTO Instructors (FirstName, LastName) VALUES ('".$f."', '".$l."');";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
+        //add echo script to go to comment page
+    }
+
+
+
+
+
+
+    /// ----------------- POPULATORS ---------------------///
+    function populateYearDropdown($c)
+    {
+        $data = "";
+        $sql = "SELECT DISTINCT Year FROM ProfCourse";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        while($row = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= "<option>".$row['Year']."</option>";
+        }
+        return;
+    }
     function populateProfDropdown($c)
     {
         $data = "";
@@ -112,39 +164,34 @@
         return $data;
     }
 
-    function insertProfessor($c, $f, $l, $t)
+    function popYears()
     {
-        $sql = "INSERT INTO Instructors (FirstName, LastName) VALUES ('".$f."', '".$l."');";
-        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $c->exec($sql);
-        //add echo script to go to comment page
+        $options = "";
+        for($x = 0; $x <= 11; $x++)
+        {
+            $options .= '<option value = '.($x + 2010).'>  - '.($x+2010).'  -  </option>';
+        }
+        return $options;
     }
 
-    function populateYearDropdown($c)
+    function popTerms()
     {
-        $data = "";
-        $sql = "SELECT DISTINCT Year FROM Courses_have_Instructors";
+        $options = '<option value = "summer">SUMMER</option>';
+        $options .= '<option value = "fall">FALL</option>';
+        $options .= '<option value = "spring">SPRING</option>';
+        return $options;
+    }
+
+    function populateChosenSubjectNumber($c)
+    {
+        $sql = "SELECT Number, Name FROM Courses WHERE Subject_Code = (SELECT Code FROM Subjects WHERE chsoen = 1);";
         $s = $c -> prepare($sql);
         $s -> execute();
-        while($row = $s -> fetch(PDO::FETCH_ASSOC))
+        $data = "";
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
         {
-            $data .= "<option>".$row['Year']."</option>";
+            $data .= '<option value = '.$r["Number"].'>'.$r['Number'].' [ '.$r["Name"].' ] </option>';
         }
-        return;
-    }
-
-   function connDB() 
-   {
-        //CONNECTION ESTABLISHMENT TO LOCAL HOST
-        $username = "root";
-        $password = "MMB3189@A";
-        $dsn = 'mysql:dbname=LPCRMP;host=127.0.0.1;port=3306;socket=/tmp/mysql.sock';  
-        //try and catch block to connect to MySQL, or throw an error
-        try {
-            $conn = new PDO($dsn, $username, $password);
-        } catch (PDOException $e) {
-        echo 'Connection Failed: ' . $e -> getMessage();
-        } // end of try and catch
-        return $conn;
+        return $data;
     }
 ?>

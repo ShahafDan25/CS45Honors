@@ -18,7 +18,7 @@ body
 }
 .btn{border: 1px solid black !important;}
 .sep {width: 80% !important;}
-.inline{display: inline-block !important;}
+.inline{display: inline-block !important; display:flex; flex-direction: row;}
 .option_a, .option_b, .option_c
 {
     display: inline-block !important;
@@ -94,6 +94,16 @@ body
 {
     background-color: white;
     border-radius: 5px !important;
-    border: 1.5px solid black !important;
+    border: 1.5px solid black !important; 
+}
 
+.optionTable
+{
+    background-color:white;
+    margin-right: 10% !important;
+    margin-left: 10% !important;
+    border: 3px solid black !important;
+    padding-right: 5% !important;
+    padding-left: 5% !important;
+    width: 80% !important;
 }
