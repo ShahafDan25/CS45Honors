@@ -26,95 +26,80 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         </head>
-
+        <div class = "cover">
+            
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
+            <h1 class = "titler inline">LPC - RMP</h1>
+        </div>
         <body>
-            <div class = "upperBody">
-                <br>
-                <button class = "pull-left btn btn-info " onclick = goToAdmin()> ADMIN </button>
-                <br>
-                <h2 > Rate My Professor </h2>
+            <div class = "lowerBody">
+            <h2><strong><u> Rate My Professor </u></strong></h2>
                 <h4> Las Positas College </h4> 
                 <ul class = "objectives">
                     <li> Leave a feedback about an instructor! </li>
                     <li> Learn about your professors at LPC! </li>
                     <li> Design and establish an academic path at LPC! </li>
                 </ul>
-            </div><br><br><br>
-            <hr class = "sep" size = "10">
-            <div class = "lowerBody">
                 <br><br>
-                    <span>
-                        <div class = "option_a">
-                            <h3> Leave Feedback </h3>
-                            <button class = "btn btn-warning" data-toggle = "collapse" data-target = "#leaveFeedback"> Go To Form </button>
-                        </div>
-
-                        <div class = "option_b"> 
-                            <h3> Read Feedback </h3>
-                            <button class = "btn btn-warning" data-toggle = "collapse" data-target = "#readFeedback" aria-expanded="false"> Go To Forum </button>
-                        </div>
-
-                        <div class = "option_c">
-                            <h3> Plan Ahead </h3>
-                            <button class = "btn btn-warning" data-toggle = "collapse" data-target = "#planner" aria-expanded="false"> Go To Planner</button>
-                        </div>
-                    </span> <!-- END OF INLINE OBJECTS -->
-                    <br> <br> <hr class = "sep"> <br>
+                    <div class = "btnOptions">
+                        <table class = "table optionTable">
+                            <thead>
+                                <th> OPTION </th>
+                                <th> DESCRIPTION </th>
+                                <th> CLICK BUTTON </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Leave Feedback</td> 
+                                    <td> Comment abou your expeirnec with one of your instructors! </td>
+                                    <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#leaveFeedback"> Click Here! </button></td>
+                                </tr>
+                                <tr>
+                                    <td>Read Feedbacks</td> 
+                                    <td> Read the commens other students has to share about a specific instructor! </td>
+                                    <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#readFeedback" aria-expanded="false"> Click Here! </button></td>
+                                </tr>
+                                <tr>
+                                    <td>Plan Ahead</td> 
+                                    <td> Create an organized cademic planner for your academic path at Las Positas College</td>
+                                    <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#planner" aria-expanded="false"> Click Here! </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br> <hr class = "sep">
                     <div id = "leaveFeedback" class = "collapse centrize">
-                        <h4> Fill out the form below to leave a feeback </h4>
-                        <p> Choose a professor from the below dropdown, or else insert his information </p>
-                        <br><hr class = "sep"><br>
-                        <h4> Choose a Professor </h4>
-                        <form class = "optionForm" action = "funcs.php" method = "post">
-                            
-                            <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
-                                <option>SELECT A PROFESSOR</option>
-                                
-                                    <?php
-                                        echo populateProfDropdown(connDB());
-                                    ?>
-                                
-                            </select>
-                            &nbsp;
-                            <input type = "hidden" name = "message" value = "feedAboutProf">
-                            <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
-                            
-                        </form>
-                        <br><hr class = "sep"><br>
-                        <h4> Feedback New Professor </h4>
-                        <form class = "optionForm" action = "funcs.php" method = "post">
-                            <input type = "text" placeholder = "First Name" required name = "firstname" class = "btn btn-input sideMargger5">
-                            <input type = "text" placeholder = "Last Name" required name = "lastname" class = "btn btn-input sideMargger5"><br><br>
-                            <label class="btn btn-secondary active">
-                                <input type="checkbox" required name = "taken"> I had a class with this instructor
-                            </label>
-                            <br> <!-- SAFE NICE SPACING -->
-                            <input type = "hidden" name = "message" value = "insertProfessor">
-                            <button class = "btn btn-success sideMargger5 sidePadder5"> SUBMIT </button>
-                        </form>
+                        <div class = "framer">
+                            <h4> Choose a Professor </h4>
+                            <p> Choose a professor from the below dropdown, or else insert his information </p>
+                            <hr class = "sep">
+                            <form action = "funcs.php" method = "post">
+                                <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
+                                    <option>SELECT A PROFESSOR</option>                 
+                                    <?php echo populateProfDropdown(connDB()); ?>
+                                </select>
+                                <input type = "hidden" name = "message" value = "feedAboutProf">
+                                <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
+                            </form>
+                        </div> 
                     </div>
-
                     <div id = "readFeedback" class = "collapse centrize">
-                        <h4> Choose a professor from the drop down to read feebacks</h4>
-                        <br><hr class = "sep"><br>
-                        <h4> Choose a Professor </h4>
-                        <form class = "optionForm" action = "funcs.php" method = "post">
-                            
-                            <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
-                                <option>SELECT A PROFESSOR</option>
-            
-                                    <?php
-                                        echo populateProfDropdown(connDB());
-                                    ?>
-                            
-                            </select>
-                            &nbsp;
-                            <input type = "hidden" name = "message" value = "readAboutProf">
-                            <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
-                            
-                        </form>
+                        <div class = "framer">
+                            <h4> Choose a Professor </h4>
+                            <p> Choose a professor to see the comments previous students had about them </p>
+                            <hr class = "sep">
+                            <form action = "funcs.php" method = "post">
+                                <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
+                                    <option>SELECT A PROFESSOR</option>
+                                    <?php echo populateProfDropdown(connDB());?>
+                                </select>
+                                &nbsp;
+                                <input type = "hidden" name = "message" value = "readAboutProf">
+                                <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
+                            </form>
+                        </div>
                     </div>
-
                     <div id = "planner" class = "collapse centrize">
                         <h4> Plan your own academic path! </h4>
                         <br><hr class = "sep"><br>
@@ -123,20 +108,18 @@
                             
                             <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
                                 <option>SELECT A MAJOR</option>
-                                
-                                    <?php
-                                        echo populateMajorDropdown(connDB());
-                                    ?>
-                            
+                                <?php echo populateMajorDropdown(connDB());?>    
                             </select>
-                            &nbsp;
                             <input type = "hidden" name = "message" value = "chooseAProf">
                             <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
-                            
                         </form>
                     </div>
                 <br>
             </div>
-            
         </body>
+        <footer class = "footer">
+            <p> <strong>Las Positas College | Academic Year 2020</strong></p>
+            <p> Special Thanks to the <u>www.thekomanetskys.com</u></p>
+            <p> Shahaf Dan Production (All rights reserved)</p>
+        </footer>
     </html>

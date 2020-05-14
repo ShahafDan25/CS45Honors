@@ -1,15 +1,31 @@
-.upperBody
+.cover
 {
-    text-align: center;
-    height: 20% !important;
-    width: 100%;
-    padding-bottom: 3%;
+    padding-top: 2% !important;
+    background-color: rgba(193,66,66, 0.82);
+    padding-bottom: 2% !important;
+    margin-bottom: 1% !important;
+
+}
+.titler
+{
+    font-family: 'Lobster', cursive !important; 
+}
+.sm2
+{
+    /* side margin 2% */
+    margin-right: 2% !important;
+    margin-left: 2% !important;
+}
+.sp2
+{
+    padding-right: 2% !important;
+    padding-left: 2% !important;
 }
 body
 {
     background-image: linear-gradient(  rgb(235, 154, 154), rgb(207, 73, 73)) !important;
     text-align: center;
-    padding-bottom: 40px !important;
+    padding-bottom: 10px !important;
 }
 .objectives
 {
@@ -41,8 +57,6 @@ body
 .centrize
 {
     text-align: center;
-    margin-left: 25% !important;
-    margin-right: 25% !important;
 }
 .sidePadder5
 {
@@ -107,6 +121,11 @@ body
     padding-left: 5% !important;
     width: 80% !important;
 }
+.noMargs
+{
+    /* meant to override the important override */
+    margin: 0% !important;
+}
 .framer
 {
     background-attachment: fixed;
@@ -116,8 +135,8 @@ body
     background-color: rgba(255, 228, 227, 0.42) !important;
     border: 3px solid black !important;
     margin-bottom: 4% !important;
-    padding-top: 5% !important;
-    padding-bottom: 5% !important;
+    padding-top: 1% !important;
+    padding-bottom: 1% !important;
     padding-right: 2% !important;
     padding-left: 2% !important;
 }

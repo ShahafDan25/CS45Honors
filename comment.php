@@ -34,6 +34,13 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         </head>
+        <div class = "cover">
+            
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
+            <h1 class = "titler inline">LPC - RMP</h1>
+            <hr class = "sep" size = "10">
+        </div>
         <body>
             <br>
             <button class = "btn btn-info pull-left sideMargger5" onclick = backHome()> HOME PAGE </button>
@@ -47,29 +54,34 @@
                     <input type="checkbox"  name = "annoStatus" id = "nameCheck"> Enter My Name
                     <input id = "nameField" type = "text" name = "commenterName" class = "btn btn-input increaseHeight" disabled>
                 </label>
-                <br><br>
-                <p> Choose the class in which you were a student of <?php echo $prof; ?> ?</p>
-                <select name = "subjectTaken" class = "inline sideMargger5 btnSelect" required>
-                    <option> SELECT A SUBJECT </option>
-                    <?php echo populateMajorDropdown($c); ?>
-                </select>
-                <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required>
-                    <option> SELECT A COURSE </option>
-                    <?php echo populateChosenSubjectNumber($c); ?>
-                </select>
-                <select name = "termTaken" class = "inline sideMargger5 btnSelect" required>
-                    <option> SELECT A TERM </option>
-                    <?php echo popTerms()?>
-                </select>
-                <select name = "yearTaken" class = "inline sideMargger5 btnSelect" required>
-                    <option> CHOOSE A YEAR </option>
-                    <?php echo popYears();?>
-                </select>
-                <br><br><br>
-                <p> What was your final grade in this class?</p>
-                <input type = "text" placeholder="Grade" class = "btn btn-input increaseHeight" name = "grade">
-                <br><br>
-                <p> Leave you comment below! </p>
+                <br><hr class = "sep">
+                <p> Select each one of the followings: </p>
+                <table class = "table framer" style = "margin: 0px !important;">
+                    <tbody>
+                        <tr>
+                            <td>Select A Subject </td>
+                            <td><select name = "subjectTaken" class = "inline sideMargger5 btnSelect" required><?php echo populateMajorDropdown($c); ?></select></td>
+                        </tr>
+                        <tr>
+                            <td>Select A Course </td>
+                            <td> <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required><?php echo populateChosenSubjectNumber($c); ?></select></td>
+                        </tr>
+                        <tr>
+                            <td>Select An Academic Term and Year</td>
+                            <td> <select name = "termTaken" class = "inline sideMargger5 btnSelect" required><?php echo popTerms()?></select><select name = "yearTaken" class = "inline sideMargger5 btnSelect" required><?php echo popYears();?></select> </td>
+                        </tr>
+                        <tr>
+                            <td>What was Your Grade? </td>
+                            <td><select name = "grade" class = "inline sideMargger5 btnSelect" required><?php echo popGrades();?></select> </td>
+                        </tr>
+                        <tr>
+                            <td>How would you rate Professor <?php echo $prod?> ? </td>
+                            <td><select name = "ratings" class = "inline sideMargger5 btnSelect" required><?php echo popRatings();?></select> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br><hr class = "sep">
+                <p> Leave you feedback below! </p>
                 <textarea style = "border: 1px solid black; border-radius: 4px; width: 100% !important; padding: 2% !important;" placeholder = "Insert your comment here!" name = "comment"></textarea>
                 <input type = "hidden" name = "message" value = "commentary">
                 <br><br>

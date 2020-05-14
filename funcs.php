@@ -47,18 +47,14 @@
    
     if($_POST['message'] == 'insertNewProf')
     {
-        $f = $_POST['firstName'];
-        $l = $_POST['lastName'];
-        $d = $_POST['dept'];
-        $c = connDB();
-        insertNewProf($c, $f, $l, $d); //insert to db
+        insertNewProf(connDB(), $_POST['firstName'], $_POST['lastName'], $_POST['dept']); //insert to db
         echo '<script>location.replace("admin.php")</script>';; //go back to admin page
     }
 
     if($_POST['message'] == 'insertNewCourse')
     {
-        newCourse(connDb(), $_POST['courseName'], $_POST['courseNumber']. $_POST['subject']);
-        //courseLog(connDb(), $_POST['courseNumber'], $_POST['subject'], $_POST['year'], $_POST['term'], $_['prof']);
+        newCourse(connDB(), $_POST['courseName'], $_POST['courseNumber'], $_POST['subject']);
+        echo '<script>alert("New Course Inserted Succesfully!"); location.replace("admin.php");</script>';
     }
 
     if($_POST['message'] == "chooseSubject")
@@ -145,6 +141,8 @@
     function newCourse($c, $name, $number, $subject)
     {
         $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."' )";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
         return;
     }
     
@@ -264,6 +262,25 @@
         $options = '<option value = "summer">SUMMER</option>';
         $options .= '<option value = "fall">FALL</option>';
         $options .= '<option value = "spring">SPRING</option>';
+        return $options;
+    }
+
+    function popGrades()
+    {
+        $options = '<option value = "A">A</option>';
+        $options .= '<option value = "B">B</option>';
+        $options .= '<option value = "C">C</option>';
+        $options .= '<option value = "C">D</option>';
+        $options .= '<option value = "C">F</option>';
+        $options .= '<option value = "C">W</option>';
+        return $options;
+    }
+    function popRatings()
+    {
+        for($x = 1; $x <= 10; $x ++)
+        {
+            $options .= '<option value = "'.$x.'"> '.$x.' </option>';
+        }
         return $options;
     }
 

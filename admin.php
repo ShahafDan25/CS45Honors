@@ -23,7 +23,12 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     </head>
-
+    <div class = "cover">
+        <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('index.php');"> HOME PAGE </button>
+        <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
+        <h1 class = "titler inline">LPC - RMP</h1>
+        <hr class = "sep" size = "10">
+    </div>
     <body>
         <br><br>
         <h2> ADMIN PAGE </h2><br>
@@ -50,32 +55,18 @@
                 </tbody>
             </table>
         </div>
-        <br><br><hr class = "sep"><br><br>
+        <br><hr class = "sep">
         <div class = "collapse" id = "newClass">
             <h3>INSERT A NEW CLASS TO THE DATABASE</h3>
             <br>
             <form action = "funcs.php" method = "post" class = "commentForm">
                 <select class = "btn btn-input" name = "subject">
                     <option>SUBJECTS</option>
-                    <!-- PHP CODE TO POPULATE -->
-                    <?php
-                        echo populateMajorDropdown(connDB());
-                    ?>
+                    <?php echo populateMajorDropdown(connDB());?>
                 </select>
-                <p> SELECT ALL THE PROFESSORS THAT WILL TEACH THIS CLASS </p>
-                <select class = "btn btn-input" name = "prof">
-                    <option>PROFESSORS</option>
-                    <!-- PHP CODE TO POPULATE -->
-                    <?php
-                        echo populateProfDropdown(connDB());
-                    ?>
-                </select> <br><br>
-                <p> SELECT THE YEAR AND ACADEMIC TERM </p> 
-                <select class = "btn btn-input inline" name = "year"><?php  echo popYears(); ?></select>
-                <select class = "btn btn-input inline" name = "term"><?php  echo popTerms(); ?></select>
                 <br><br>
-                <input type = "text" name = "courseNumber" placeholder="Course Number" class = "btn btn-input">
-                <input type = "text" name = "courseName" placeholder = "class name" class = "btn btn-input"><br>
+                <input type = "text" name = "courseNumber" placeholder="  Course Number" class = "btn btn-input sm2">
+                <input type = "text" name = "courseName" placeholder = "  Class Name" class = "btn btn-input sm2"><br>
                 <input type = "hidden" name = "message" value = "insertNewCourse"><br>
                 <button class = "btn btn-success sidePadder5">SUBMIT</button>
             </form>
@@ -101,17 +92,39 @@
         <div class = "collapse" id = "existClass">
             <h3> ADD AN EXISTING CLASS TO AN ACADEMIC TERM </h3><br>
             <form action = "funcs.php" method = "post" class = "commentForm">
-                <select class = "btn btn-input inline" name= "subject" required><?php echo populateAllSubjects(connDB()); ?></select>
-                <select class = "btn btn-input inline" name= "number" required><?php echo populateAllClasses(connDB()); ?></select>
-                <select class = "btn btn-input inline" name = "prof" required><?php echo populateProfDropdown(connDB()); ?></select>
-                <br><br>
-                <select class = "btn btn-input inline" name = "term" required><?php echo popTerms(); ?></select>
-                <select class = "btn btn-input inline" name = "year" required><?php echo popYears(); ?></select>
-                <br><br>
+                <table class = "table">
+                    <tbody>
+                        <tr>
+                            <th> Choose Subject </th>
+                            <td><select class = "btn btn-input inline" name= "subject" required><?php echo populateAllSubjects(connDB()); ?></select> </td>
+                        </tr>
+                        <tr>
+                            <th> Choose Class </th>
+                            <td><select class = "btn btn-input inline" name= "number" required><?php echo populateAllClasses(connDB()); ?></select></td>
+                        </tr>
+                        <tr>
+                            <th> Choose Instructor </th>
+                            <td><select class = "btn btn-input inline" name = "prof" required><?php echo populateProfDropdown(connDB()); ?></select></td>
+                        </tr>
+                        <tr>
+                            <th> Choose Academic Term </th>
+                            <td><select class = "btn btn-input inline" name = "term" required><?php echo popTerms(); ?></select></td>
+                        </tr>
+                        <tr>
+                            <th> Choose Year </th>
+                            <td><select class = "btn btn-input inline" name = "year" required><?php echo popYears(); ?></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
                 <input type = "hidden" value = "addExists" name = "message">
                 <button class = "btn btn-success sidePadder5"> SUBMIT </button>
             </form> 
-    
         </div>  
     </body>
+    <footer class = "footer">
+        <p> <strong>Las Positas College | Academic Year 2020</strong></p>
+        <p> Special Thanks to the <u>www.thekomanetskys.com</u></p>
+        <p> Shahaf Dan Production (All rights reserved)</p>
+    </footer>
 </html>
