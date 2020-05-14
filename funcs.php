@@ -69,10 +69,33 @@
         else echo '<script>alert("Error, Wrong Credentials"); location.replace("login.html");</script>';
     }
 
+    if($_POST['message'] == "signup")
+    {
+        userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2']);
+        echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.html");</script>';
+    }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
-
+    function checkcredentials($c, $m, $p)
+    {
+        //verify password is correct for the given email address
+        $sql = "SELECT password FROM Credentials WHERE zonemail = '".$m."';";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        $r = $s -> fetch(PDO::FETCH_ASSOC);
+        if($r['password'] == $p) return true;
+        else return false;        
+    }
+    
+    function userSignUp($c, $m, $p)
+    {
+        //NOTE: c = connection, m = zonemail, p = password
+        $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."');";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c->exec($sql);
+        return;
+    }
 
     function courseLog($c, $subject, $number, $prof, $term, $year)
     {
