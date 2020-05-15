@@ -74,6 +74,10 @@
                             <td> Enter Course's Name </td>
                             <td><input type = "text" name = "courseName" placeholder = "  Class Name" class = "btn btn-input sm2"></td>
                         </tr>
+                        <tr>
+                            <td> Enter Course's Units </td>
+                            <td><input type = "number" name = "units" placeholder = "  Course Units" class = "btn btn-input sm2" min = "0" max = "8" step = "0.5"></td>
+                        </tr>
                     </tbody>
             </table>
             <br>

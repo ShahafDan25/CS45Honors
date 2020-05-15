@@ -104,15 +104,18 @@
                     </div>
                     <div id = "planner" class = "collapse centrize">
                         <div class = "framer">
-                            <h4> Plan your own academic path! </h4>
-                            <br><hr class = "sep"><br>
-                            <h4> Choose Your Major </h4>
+                            <br>
+                            <h4> Login to Academic Planner </h4>
                             <form action = "funcs.php" method = "post">
-                                <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
-                                    <option>SELECT A MAJOR</option>
-                                    <?php echo populateMajorDropdown(connDB());?>    
-                                </select>
-                                <input type = "hidden" name = "message" value = "chooseAProf">
+                                <table class = "table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Please Enter your Zonemail Address</th>
+                                            <td><input type = "text" name = "zonemail" class = "btn btn-input" placeholder = "  Zonemail"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type = "hidden" name = "message" value = "planner">
                                 <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
                             </form> 
                         </div>

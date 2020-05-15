@@ -7,10 +7,10 @@
     border-bottom: 4px solid black !important;
     width: 100% !important;
 }
-.titler
-{
-    font-family: 'Lobster', cursive !important; 
-}
+.titler{font-family: 'Lobster', cursive !important; }
+.left {text-align: left !important;}
+.right {text-align: right !important;}
+.wider {margin-right: 2% !important; margin-left: 2% !important;}
 .sm2
 {
     /* side margin 2% */
@@ -24,7 +24,7 @@
 }
 .body
 {
-    background-image: linear-gradient(  rgb(235, 154, 154), rgb(207, 73, 73)) !important;
+    background-image: linear-gradient(  #aaaaaa, #EEEEEE) !important;
     text-align: center;
     padding-bottom: 10px !important;
 }

@@ -1,5 +1,8 @@
 <?php
+    @ob_start(); 
+    session_start();
     include "conndb.php";
+    
     // ----------------------------------- //
     // ----------- POSTS ----------------- //
     // ----------------------------------- //
@@ -53,7 +56,7 @@
 
     if($_POST['message'] == 'insertNewCourse')
     {
-        newCourse(connDB(), $_POST['courseName'], $_POST['courseNumber'], $_POST['subject']);
+        newCourse(connDB(), $_POST['courseName'], $_POST['courseNumber'], $_POST['subject'], $_POST['units']);
         echo '<script>alert("New Course Inserted Succesfully!"); location.replace("admin.php");</script>';
     }
 
@@ -71,19 +74,65 @@
 
     if($_POST['message'] == "logincheck")
     {
-        if(checkcredentials(connDB(), $_POST['un'], $_POST['pw'])) echo '<script>location.replace("index.php");</script>';
-        else echo '<script>alert("Error, Wrong Credentials"); location.replace("login.php");</script>';
+        if(checkcredentials(connDB(), $_POST['un'], $_POST['pw'])) 
+        {
+            echo '<script>location.replace("index.php");</script>';
+            $_SESSION['user'] = $_POST['un'];
+        }   
+        else 
+        {
+            echo '<script>alert("Error, Wrong Credentials"); location.replace("login.php");</script>';
+        }
     }
-
     if($_POST['message'] == "signup")
     {
         userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']);
         echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.php");</script>';
     }
+
+    if($_POST['message'] == "planner")
+    {
+        if (checkZonemail(connDB(), $_POST['zonemail'])) echo '<script>location.replace("planner.php");</script>';
+        else echo '<script>alert ("Your zonemail was not found in the system. Try again"); location.replace("index.php");</script>';
+    }
+
+    if($_POST['message'] == "insertStudCourse")
+    {
+        $user = $_SESSION['user'];
+        $prof = $_POST['prof'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
+        $grade = $_POST['grade'];
+        $course = $_POST['course'];
+        var_dump($user);
+        insertStudCourse(connDB(), $user, $prof, $course, $term, $year, $grade);
+        echo '<script>location.replace("planner.php");</script>';
+    }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function insertStudCourse($c, $u, $p, $l, $t, $y, $g)
+    {
+        $sql = "INSERT INTO StudCourse VALUES (".$l.", (SELECT Subjects_Code FROM Instructors WHERE ID = ".$p."), '".$u."', '".$t."', ".$y.", '".$g."', ".$p.", (SELECT Subjects_Code FROM Instructors WHERE ID = ".$p."));";
+        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $c -> exec($sql);
+        return;
+    }
     
+    function calcGPA($c, $user)
+    {
+        $sql = "SELECT c.Units, sc.Grade FROM Courses c JOIN StudCourse sc ON sc.Courses_number = c.Number";
+        
+        return 0;
+    }
+    
+    function checkZonemail($c, $z)
+    {
+        $sql = "SELECT COUNT(*) FROM Credentials WHERE zonemail = '".$z."';";
+        if(($c -> query($sql) -> fetchColumn()) == 0) return false;
+        else return true;
+    }
+
     function comment($c, $g, $text, $a, $t, $y, $dt, $course, $rating)
     {
         $sql1 = "SELECT ID FROM Instructors WHERE Comment = 1";
@@ -138,9 +187,9 @@
         return;
     }
     
-    function newCourse($c, $name, $number, $subject)
+    function newCourse($c, $name, $number, $subject, $units)
     {
-        $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."' )";
+        $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."', ".$units.")";
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c->exec($sql);
         return;
@@ -174,7 +223,6 @@
         $c->exec($sql);
         //add echo script to go to comment page
     }
-
 
 
 
@@ -343,6 +391,38 @@
             $table .= '</tbody></table>';
             echo $table;
         }
+        return;
+    }
+
+    function popStudCourses($c, $user)
+    {
+        $sql = "SELECT sc.Courses_Number, sc.Subjects_Code, sc.Term, sc.Year, sc.Grade, c.Units, c.Name FROM StudCourse sc JOIN Courses c ON (c.Number = sc.Courses_Number AND c.Subjects_Code = sc.Subjects_Code) WHERE Stud_Zonemail = '".$user."';";
+        $s = $c ->prepare($sql);
+        $s -> execute();
+        $foundData = false;
+        $table = "";
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            if(!$foundData)
+            {
+                $table .= "<table class = 'table optionTable'>
+                <thead>
+                    <th> Term / Year </th>
+                    <th> Course </th> 
+                    <th> Grade </th>
+                    <th> Units </th>
+                </thead>
+                <tbody>";
+            }
+            $table .= "<tr><td>".$r['Term']. " / ".$r['Year']."</td>";
+            $table .= "<td>".$r['Name']." [ ".$r['Subjects_Code']." - ".$r['Courses_Number']." ]</td>";
+            $table .= "<td>".$r['Grade']."</td>";
+            $table .= "<td>".$r['Units']."</td>";
+            $table .= "</tr>";
+            $foundData = true;
+        }
+        if ($table == "") echo "<h5>No classes are on your record yet!</h5><br>";
+        else $table .= "</tbody></table>"; echo $table;
         return;
     }
 ?>
