@@ -44,6 +44,10 @@
                     <!-- PHP WILL PRINT A TABLE -->
                     <?php popStudCourses(connDB(), $user); ?>
                     <!-- PHP WILL FINISH PRINTING THE TABLE -->
+                    <form action = "funcs.php" method = "post">
+                        <input type = "hidden" name= "message" value = "pdfReport">
+                        <button class = "btn btn-info sidePadder5">GENERATE PDF SUMMARY</button>
+                    </form>
                     <hr class = "sep">
                     <h3> Add a Course to your plan! </h3>
                     <form action = "funcs.php" method = "post">

@@ -1,7 +1,7 @@
 <?php
     @ob_start(); 
     session_start();
-    include "conndb.php";
+    include "myFPDF.php";
     
     // ----------------------------------- //
     // ----------- POSTS ----------------- //
@@ -111,9 +111,36 @@
         insertStudCourse(connDB(), $user, $prof, $course, $term, $year, $grade);
         echo '<script>location.replace("planner.php");</script>';
     }
+
+    if($_POST['message'] == "pdfReport")
+    {
+        // var_dump("user: ".$_SESSION['user']);
+        $user = $_SESSION['user'];
+        pdf_report(connDB(), $user);
+        //echo '<script>location.replace("planner.php");</script>';
+    }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
+    function pdf_report($c, $user) //generate pdf report
+    {
+        //--------------- report code ---------------------//
+        $pdf = new myFPDFClass; 
+        $pdf -> AddPage();
+        $pdf -> Heads();
+        $pdf -> tableHead();
+        $pdf -> tableBody(connDB(), $user);
+
+        date_default_timezone_set("America/Los_Angeles"); /// set time zone
+        $todayte = date ("Y-m-d");
+
+        $reportFile = fopen('rmpclasses'.$todayte.'.pdf', 'w+');
+        fclose($reportFile);
+        $pdf -> Output('rmpclasses'.$todayte.'.pdf', 'F');
+        echo '<script>alert("YOUR PDF IS GENERATED AS: rmpclasses'.$todayte.'.pdf  ");</script>';
+        return;
+    }
+
     function insertStudCourse($c, $u, $p, $l, $t, $y, $g)
     {
         $sql = "INSERT INTO StudCourse VALUES (".$l.", (SELECT Subjects_Code FROM Instructors WHERE ID = ".$p."), '".$u."', '".$t."', ".$y.", '".$g."', ".$p.", (SELECT Subjects_Code FROM Instructors WHERE ID = ".$p."));";
