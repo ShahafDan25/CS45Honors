@@ -78,7 +78,7 @@
                     </form>
                     <hr class = "sep">
                     <h3> Cumulative GPA: <?php echo calcGPA(connDB(), $user); ?></h3>
-                    <?php //$data = popGpaGraph(connDB(), $user); ?> 
+                    <?php $data = popGpaGraph(connDB(), $user); ?> 
                     <div class = "graphicalMorris">
                         <div id = "gpaGraph"><!-- GRAPH VIA JS --></div>
                     </div>
@@ -95,7 +95,7 @@
             Morris.Line({
                 element : 'gpaGraph', 
                 data:[<?php echo $data ?>], 
-                xkey: 'SEMESTER',
+                xkey: ['SEMESTER'],
                 ykeys: ['GPA'],
                 ymin: '2.0',
                 ymax: '4.0',

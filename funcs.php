@@ -517,11 +517,16 @@
         while($r = $s -> fetch(PDO::FETCH_ASSOC))
         {
             //next: embed the inner sql statement to calc gpa per semester;
-            $sql2 = "SELECT sc.Grade, c.Units FROM Courses c JOIN StudCourse sc ON c.Number = sc.Courses_Number WHERE sc.Stud_Zonemail = '".$user."';";
+            $sql2 = "SELECT sc.Grade, c.Units FROM Courses c JOIN StudCourse sc ON c.Number = sc.Courses_Number WHERE sc.Stud_Zonemail = '".$user."' AND sc.Term  = '".$r['Term']."' AND sc.Year = '".$r['Year']."';";
             $s2 = $c -> prepare($sql2);
-            $s -> execute();
+            $s2 -> execute();
             $totalUnits = 0; //niitiatlize variables to calculate the GPA per term
             $totalIndValue = 0;
+            $sem = 0;
+            if($r['Term'] == "spring") $sem = 0.1;
+            elseif($r['Term'] == "summer") $sem = 0.4;
+            elseif($r['Term'] == "fall") $sem = 0.6;
+
             while ($r2 = $s2 -> fetch(PDO::FETCH_ASSOC))
             {
                 $totalUnits += $r2['Units'];
@@ -530,12 +535,12 @@
                 elseif ($r2['Grade'] == 'B') $value = 3;
                 elseif($r2['Grade'] == 'C') $value = 2;
                 elseif ($r2['Grade'] == 'D') $value = 1;
-                elseif ($r2['Grade'] == 'W') $totalUnits -= $r['Units'];
+                elseif ($r2['Grade'] == 'W') $totalUnits -= $r2['Units'];
                 else $value = 0;
-                $totalIndValue += ($r['Units'] * $value);
+                $totalIndValue += ($r2['Units'] * $value);
             }
             $termGPA = round((($totalIndValue/$totalUnits)), 2);
-            $data = "{SEMESTER:'".$r['Term']." ".$r['Year']."', GPA:'".$termGPA."'}, ";
+            $data .= "{SEMESTER:'".($r['Year']+$sem)."', GPA:'".$termGPA."'}, ";
         }
         //next: remove the last comma for snytax corrections
         $data = substr($data, 0, strlen($data) - 2);//cut the last two characters (remove a space and a comma)
