@@ -35,7 +35,7 @@
             <br>
             <h1> WELCOME ! </h1>
             <h2> To the Las Positas College Rate My Professor </h2>
-            <div class = "centrize framer">
+            <div class = "centrize framer w60">
             <table class = "table">
                 <tbody>
                     <tr> 
@@ -50,7 +50,7 @@
             </table>
             </div>
         
-            <div class = "collapse framer" id = "login">
+            <div class = "collapse framer w60" id = "login">
                 <h3> Login With your student email</h3>
                 <p> Recall you must be a zonemail user to use it! </p>
                 <br>
@@ -73,7 +73,7 @@
                 </form>
             </div>
 
-            <div class = "collapse framer " id = "signup" >
+            <div class = "collapse framer w60" id = "signup" >
                 <form action = "funcs.php" method = "post">
                     <h4> Fill Out the information below to sign up to LPCRMP </h4>
                     <p> <strong><u>NOTE</u></strong>: Only zonemail users can use the site!</p>

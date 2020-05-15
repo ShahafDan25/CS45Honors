@@ -38,7 +38,7 @@
         <body class = "body">
             <div>
                 <h2> WELCOME TO YOUR ACADEMIC PLANNER </h2>
-                <div class = "framer centrize wider">
+                <div class = "framer centrize wider w85">
                     <h3>Here are your currently tracked and planned courses: </h3>
                     <!-- PHP WILL PRINT A TABLE -->
                     <?php popStudCourses(connDB(), $user); ?>
@@ -50,21 +50,19 @@
                             <thead>
                                 <th> Category </th>
                                 <th> Select From: </th> 
+                                <th> Category </th>
+                                <th> Select From: </th> 
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Academic Term</td>
                                     <td><select class = "btn btn-input inline" name = "term" required><?php echo popTerms(); ?></select>&nbsp;<select class = "btn btn-input inline" name = "year" required><?php echo popYears(); ?></select> </td>
-                                </tr>
-                                <tr>
-                                    <td> Grade Recieved </td>
-                                    <td><select class = "btn btn-input inline" name = "grade" required><?php echo popGrades(); ?></select></td>
-                                </tr>
-                                <tr>
                                     <td>Instructor Teaching</td>
                                     <td><select class = "btn btn-input inline" name = "prof" required><?php echo populateProfDropdown(connDB()); ?></select></td>
                                 </tr>
                                 <tr>
+                                    <td> Grade Recieved </td>
+                                    <td><select class = "btn btn-input inline" name = "grade" required><?php echo popGrades(); ?></select></td>
                                     <td>Course Taken</td>
                                     <td><select class = "btn btn-input inline" name = "course" required><?php echo populateAllClasses(connDB()); ?></select></td>
                                 </tr>

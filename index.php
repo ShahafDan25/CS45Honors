@@ -72,7 +72,7 @@
                     </div>
                     <br> <hr class = "sep">
                     <div id = "leaveFeedback" class = "collapse centrize">
-                        <div class = "framer">
+                        <div class = "framer w60">
                             <h4> Choose a Professor </h4>
                             <p> Choose a professor from the below dropdown, or else insert his information </p>
                             <hr class = "sep">
@@ -87,7 +87,7 @@
                         </div> 
                     </div>
                     <div id = "readFeedback" class = "collapse centrize">
-                        <div class = "framer">
+                        <div class = "framer w60">
                             <h4> Choose a Professor </h4>
                             <p> Choose a professor to see the comments previous students had about them </p>
                             <hr class = "sep">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div id = "planner" class = "collapse centrize">
-                        <div class = "framer">
+                        <div class = "framer w60">
                             <br>
                             <h4> Login to Academic Planner </h4>
                             <form action = "funcs.php" method = "post">

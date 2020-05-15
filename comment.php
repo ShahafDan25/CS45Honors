@@ -56,7 +56,7 @@
                 </label>
                 <br><hr class = "sep">
                 <p> Select each one of the followings: </p>
-                <table class = "table framer" style = "margin: 0px !important;">
+                <table class = "table framer w60" style = "margin: 0px !important;">
                     <tbody>
                         <tr>
                             <td>Select A Course </td>

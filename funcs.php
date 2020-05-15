@@ -373,25 +373,29 @@
 
     function populateCommentTable($c)
     {
-        $sql = "SELECT Name, TEXT, DateTimeStamp FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1);";
+        $colors = array("FF7E7E", "#FCA0A0", "#FCCEA0", "FCE0A0", "EFFF87", "#FCFCA0", "#CEFCA0", "#A0FCA0", "#A0FCCE", "#A0C3FC");
+        $sql = "SELECT Name, TEXT, DateTimeStamp, Rating FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1);";
         $s = $c ->prepare($sql);
         $s -> execute();
         $foundData = false;
         $table = "";
         while($r = $s -> fetch(PDO::FETCH_ASSOC))
         {
+
             if(!$foundData)
             {
                 $table .= "<table class = 'table'>
                 <thead>
                     <th> Feedbacker: </th>
+                    <th> Rated: </th>
                     <th> Comment: </th>
-                    <th> Date </th>
+                    <th> Date: </th>
                 </thead>
                 <tbody>";
             }
-            if($r['Name'] == "") $table .= '<tr><td> Anonymous </td>';
+            if($r['Name'] == "") $table .= '<tr ><td> Anonymous </td>';
             else $table .= '<tr><td>'.$r['Name'].'</td>';
+            $table .= '<td><div style = "background-color: '.$colors[($r['Rating']-1)].' !important; border-radius:8px; border: 2px solid black; padding: 20% !important; text-align:center;">'.$r['Rating'].'</div></td>';
             $table .= '<td>'.$r['TEXT'].'</td>';
             $table .= '<td>'.$r['DateTimeStamp'].'</td>';
             $table .= '</tr>';

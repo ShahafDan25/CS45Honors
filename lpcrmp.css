@@ -127,12 +127,12 @@
     /* meant to override the important override */
     margin: 0% !important;
 }
+.w60{margin-right: 20% !important; margin-left: 20% !important;}
+.w85{margin-right:7.5% !important; margin-left: 7.5% !important;}
 .framer
 {
     background-attachment: fixed;
     margin-top: 2% !important;
-    margin-right: 20% !important;
-    margin-left: 20% !important;
     background-color: rgba(255, 228, 227, 0.42) !important;
     border: 3px solid black !important;
     margin-bottom: 4% !important;
@@ -143,13 +143,17 @@
 }
 .footer
 {
-    background-color: white;
+    /* background-color: white; */
     border-top: 3px solid black;
     border-bottom: 3px solid black;
     padding-top: 01.2% !important;
     padding-bottom : 0.5% !important;
     margin-top: 5% !important;
     margin-bottom: 1% !important;
+    background-image: url('graphics/bg5.png');
+    background-repeat: no-repeat;
+    background-position: center !important; 
+    background-size: 100% !important;   
 }
 
 /* ---------------------------------------------
