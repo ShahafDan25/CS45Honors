@@ -121,9 +121,24 @@
     
     function calcGPA($c, $user)
     {
-        $sql = "SELECT c.Units, sc.Grade FROM Courses c JOIN StudCourse sc ON sc.Courses_number = c.Number";
-        
-        return 0;
+        $sql = "SELECT c.Units, sc.Grade FROM Courses c JOIN StudCourse sc ON sc.Courses_number = c.Number WHERE sc.Stud_Zonemail = '".$user."';";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        $totalUnits = 0;
+        $totalIndValue = 0;
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $totalUnits += $r['Units'];
+            $value = 0;
+            if($r['Grade'] == 'A') $value = 4;
+            elseif ($r['Grade'] == 'B') $value = 3;
+            elseif($r['Grade'] == 'C') $value = 2;
+            elseif ($r['Grade'] == 'D') $value = 1;
+            elseif ($r['Grade'] == 'W') $totalUnits -= $r['Units'];
+            else $value = 0;
+            $totalIndValue += ($r['Units'] * $value);
+        }
+        return round((($totalIndValue/$totalUnits)), 2);//essentially the floor function
     }
     
     function checkZonemail($c, $z)
