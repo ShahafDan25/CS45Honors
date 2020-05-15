@@ -84,6 +84,7 @@
             echo '<script>alert("Error, Wrong Credentials"); location.replace("login.php");</script>';
         }
     }
+
     if($_POST['message'] == "signup")
     {
         if(userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']))
@@ -176,6 +177,7 @@
         $c -> prepare($sql) -> execute();
         return;
     }
+
     function checkcredentials($c, $m, $p)
     {
         //verify password is correct for the given email address
@@ -183,7 +185,7 @@
         $s = $c -> prepare($sql);
         $s -> execute();
         $r = $s -> fetch(PDO::FETCH_ASSOC);
-        if($r['password'] == $p) return true;
+        if($r['password'] == md5($p)) return true;
         else return false;        
     }
     
@@ -196,7 +198,7 @@
         if (substr((strlen($m) - 19), 19) != "zonemail.clpccd.edu") echo '<script>alert("Only zonemails can use this site!"); location.replace("login.php");</script>';
         else
         {
-            $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."', '".$major."');";
+            $sql = "INSERT INTO Credentials VALUES ('".$m."', md5('".$p."'), '".$major."');";
             $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $c->exec($sql);
             return true;
@@ -240,7 +242,6 @@
         $s2 -> execute();
         return;
     }
-
 
     function insertProfessor($c, $f, $l, $t)
     {
