@@ -72,13 +72,13 @@
     if($_POST['message'] == "logincheck")
     {
         if(checkcredentials(connDB(), $_POST['un'], $_POST['pw'])) echo '<script>location.replace("index.php");</script>';
-        else echo '<script>alert("Error, Wrong Credentials"); location.replace("login.html");</script>';
+        else echo '<script>alert("Error, Wrong Credentials"); location.replace("login.php");</script>';
     }
 
     if($_POST['message'] == "signup")
     {
-        userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2']);
-        echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.html");</script>';
+        userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']);
+        echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.php");</script>';
     }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
@@ -121,10 +121,10 @@
         else return false;        
     }
     
-    function userSignUp($c, $m, $p)
+    function userSignUp($c, $m, $p, $major)
     {
         //NOTE: c = connection, m = zonemail, p = password
-        $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."');";
+        $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."', '".$major."');";
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c->exec($sql);
         return;
@@ -327,7 +327,8 @@
                 </thead>
                 <tbody>";
             }
-            $table .= '<tr><td>'.$r['Name'].'</td>';
+            if($r['Name'] == "") $table .= '<tr><td> Anonymous </td>';
+            else $table .= '<tr><td>'.$r['Name'].'</td>';
             $table .= '<td>'.$r['TEXT'].'</td>';
             $table .= '<td>'.$r['DateTimeStamp'].'</td>';
             $table .= '</tr>';

@@ -25,7 +25,7 @@
     </head>
     <div class = "cover">
         <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('index.php');"> HOME PAGE </button>
-        <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
+        <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
         <h1 class = "titler inline">LPC - RMP</h1>
         <hr class = "sep" size = "10">
     </div>

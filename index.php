@@ -29,7 +29,7 @@
         <div class = "cover">
             
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
-            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
             <h1 class = "titler inline">LPC - RMP</h1>
         </div>
         <!-- <body class = "container"> -->
@@ -103,18 +103,19 @@
                         </div>
                     </div>
                     <div id = "planner" class = "collapse centrize">
-                        <h4> Plan your own academic path! </h4>
-                        <br><hr class = "sep"><br>
-                        <h4> Choose Your Major </h4>
-                        <form class = "optionForm">
-                            
-                            <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
-                                <option>SELECT A MAJOR</option>
-                                <?php echo populateMajorDropdown(connDB());?>    
-                            </select>
-                            <input type = "hidden" name = "message" value = "chooseAProf">
-                            <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
-                        </form>
+                        <div class = "framer">
+                            <h4> Plan your own academic path! </h4>
+                            <br><hr class = "sep"><br>
+                            <h4> Choose Your Major </h4>
+                            <form action = "funcs.php" method = "post">
+                                <select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected">
+                                    <option>SELECT A MAJOR</option>
+                                    <?php echo populateMajorDropdown(connDB());?>    
+                                </select>
+                                <input type = "hidden" name = "message" value = "chooseAProf">
+                                <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
+                            </form> 
+                        </div>
                     </div>
                 <br>
             </div>
