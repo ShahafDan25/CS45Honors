@@ -31,7 +31,7 @@
         date_default_timezone_set("America/Los_Angeles"); /// set time zone
         $datetimestamp = date ("Y-m-d H:i:s"); //current time in that time zone
         comment(connDB(), $grade, $comment, $a, $term, $year, $datetimestamp, $class, $rating);
-        echo '<script>alert("Comment Succesfully Stored!");location.replace("index.php");</script>';
+        echo '<script>location.replace("index.php");</script>';
     }
 
     if($_POST['message'] == "feedAboutProf")
@@ -39,6 +39,7 @@
         $p = $_POST['profSelected'];
         updateProfFeed(connDB(), $p);
         echo '<script>location.replace("comment.php");</script>';
+        $_SESSION['commentProf'] = $_POST['profSelected'];
 
     }
 
@@ -90,6 +91,10 @@
         if(userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']))
         {
             echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.php");</script>';
+        }
+        else
+        {
+            echo '<script>location.replace("login.php");</script>';
         }
     }
 
@@ -180,20 +185,29 @@
 
     function comment($c, $g, $text, $a, $t, $y, $dt, $course, $rating)
     {
-        $sql1 = "SELECT ID FROM Instructors WHERE Comment = 1";
-        $s = $c -> prepare($sql1);
+        //verify the comment does not exist!
+        $profID = $_SESSION['commentProf'];
+        $sql_checkExists = "SELECT Year FROM Comments WHERE Term = '".$t."' AND Year = ".$y." AND Courses_Number = ".$course." AND Courses_Subjects_Code = (SELECT Subjects_Code FROM Instructors WHERE ID = ".$profID.") AND Instructors_ID = ".$profID.";";
+        $s = $c -> prepare($sql_checkExists);
         $s -> execute();
-        $r = $s -> fetch(PDO::FETCH_ASSOC);
-        $idi = $r['ID'];
+        if(!$s -> fetch(PDO::FETCH_ASSOC)) 
+        {
+            echo '<script>alert("You already commented on this course, about this professor, in this term and year, before.");</script>';
+            return;
+        }
+
+
         $sql2 = "SELECT MAX(ID)+1 FROM Comments;";
         $s = $c -> prepare($sql2);
         $s -> execute();
         $max = $s -> fetchColumn();
 
-        $sql = "INSERT INTO Comments (ID, Grade, TEXT, Name, Term, Year, DateTimeStamp, Courses_Number, Courses_Subjects_Code, Instructors_ID, Rating) VALUES (".$max.",'".$g."', '".$text."', '".$a."', '".$t."', ".$y.", '".$dt."', ".$course.", (SELECT Subjects_Code FROM Instructors WHERE comment = 1), ".$idi.", ".$rating.");";
+        $sql = "INSERT INTO Comments (ID, Grade, TEXT, Name, Term, Year, DateTimeStamp, Courses_Number, Courses_Subjects_Code, Instructors_ID, Rating) VALUES (".$max.",'".$g."', '".$text."', '".$a."', '".$t."', ".$y.", '".$dt."', ".$course.", (SELECT Subjects_Code FROM Instructors WHERE ID = ".$profID."), ".$profID.", ".$rating.");";
 
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c -> exec($sql);
+        echo '<script>alert("Comment Stored Succesfully!");</script>';
+
         return;
     }
 
@@ -221,15 +235,22 @@
         //NOTE: c = connection, m = zonemail, p = password
         //structure: 
         //if not zonemail: alert, locationReplace return false
+        //elseif: verify no such entry in the db
         //else:  insert, return true
         if (substr($m, (strlen($m) - 19), 19) != "zonemail.clpccd.edu") echo '<script>alert("Only zonemails can use this site!"); location.replace("login.php");</script>';
         else
         {
-            $sql = "INSERT INTO Credentials VALUES ('".$m."', md5('".$p."'), '".$major."');";
-            $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $c->exec($sql);
-            return true;
+            // $sql = "SELECT COUNT(*) FROM Credentials WHERE zonemail = '".$m."';";
+            if(checkZonemail($c, $m)) echo '<script>alert("this email address is already registered");</script>';
+            else
+            {
+                $sql = "INSERT INTO Credentials VALUES ('".$m."', md5('".$p."'), '".$major."');";
+                $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $c->exec($sql);
+                return true;
+            }
         }
+        
         return false;
         
     }
@@ -244,6 +265,16 @@
     
     function newCourse($c, $name, $number, $subject, $units)
     {
+        //first: check existence:
+        $sql = "SELECT COUNT(*) FROM Courses WHERE Number = ".$number." AND Subjects_Code = '".$subject."');";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        if(!$s -> fetch(PDO::FETCH_ASSOC)) 
+        {
+            echo '<script>alert("Course Already Exists in the DataBase!");location.replace("admin.php");</script>';
+            return;
+        }
+        
         $sql = "INSERT INTO Courses VALUES (".$number.", '".$subject."', '".$name."', ".$units.")";
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c->exec($sql);
@@ -455,7 +486,7 @@
 
     function popStudCourses($c, $user)
     {
-        $sql = "SELECT sc.Courses_Number, sc.Subjects_Code, sc.Term, sc.Year, sc.Grade, c.Units, c.Name FROM StudCourse sc JOIN Courses c ON (c.Number = sc.Courses_Number AND c.Subjects_Code = sc.Subjects_Code) WHERE Stud_Zonemail = '".$user."';";
+        $sql = "SELECT sc.Courses_Number, sc.Subjects_Code, sc.Term, sc.Year, sc.Grade, c.Units, c.Name FROM StudCourse sc JOIN Courses c ON (c.Number = sc.Courses_Number AND c.Subjects_Code = sc.Subjects_Code) WHERE Stud_Zonemail = '".$user."' ORDER BY sc.Year, sc.Term ;";
         $s = $c ->prepare($sql);
         $s -> execute();
         $foundData = false;
@@ -511,24 +542,27 @@
         //idea: two inner sql statements (embedded)
         //first for year and term
         //second (inner one) for gpa calculations per each term/year
-        $sql = "SELECT Term, Year FROM StudCourse WHERE Stud_Zonemail = '".$user."' ORDER BY Year;";
+        $sql = "SELECT DISTINCT Term, Year FROM StudCourse WHERE Stud_Zonemail = '".$user."' ORDER BY Year;";
         $s = $c -> prepare($sql);
         $s -> execute();
+        $totalUnits = 0; //initiatlize variables to calculate the GPA per term
+        $totalIndValue = 0;
+        $concurrent = 0;
         while($r = $s -> fetch(PDO::FETCH_ASSOC))
         {
             //next: embed the inner sql statement to calc gpa per semester;
             $sql2 = "SELECT sc.Grade, c.Units FROM Courses c JOIN StudCourse sc ON c.Number = sc.Courses_Number WHERE sc.Stud_Zonemail = '".$user."' AND sc.Term  = '".$r['Term']."' AND sc.Year = '".$r['Year']."';";
             $s2 = $c -> prepare($sql2);
             $s2 -> execute();
-            $totalUnits = 0; //niitiatlize variables to calculate the GPA per term
-            $totalIndValue = 0;
             $sem = 0;
             if($r['Term'] == "spring") $sem = 0.1;
             elseif($r['Term'] == "summer") $sem = 0.4;
             elseif($r['Term'] == "fall") $sem = 0.6;
-
-            while ($r2 = $s2 -> fetch(PDO::FETCH_ASSOC))
+            $counter = 0;
+            while($r2 = $s2 -> fetch(PDO::FETCH_ASSOC))
             {
+                $counter++;
+                echo $counter;
                 $totalUnits += $r2['Units'];
                 $value = 0;
                 if($r2['Grade'] == 'A') $value = 4;
@@ -539,7 +573,8 @@
                 else $value = 0;
                 $totalIndValue += ($r2['Units'] * $value);
             }
-            $termGPA = round((($totalIndValue/$totalUnits)), 2);
+            echo " | ";
+            $termGPA = round(($totalIndValue/$totalUnits), 2);
             $data .= "{SEMESTER:'".($r['Year']+$sem)."', GPA:'".$termGPA."'}, ";
         }
         //next: remove the last comma for snytax corrections

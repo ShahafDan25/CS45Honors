@@ -16,7 +16,7 @@
 <DOCYTPE! html>
 <html>
     <head>
-        <title>Admin</title>
+        <title>LPCRMP - Read Comments</title>
 
         <!-- <link rel="shortcut icon" href="./The Market_files/lpcsgLogo.jpg"> -->
 
@@ -46,8 +46,7 @@
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('index.php');"> HOME PAGE </button>
 
             <h1 class = "titler inline">LPC - RMP</h1>
-            <hr class = "sep" size = "10">
-            <p> Welcome <?php echo $_SESSION['user'] ?> ! </p>
+            <!-- <p> Welcome <?php echo $_SESSION['user'] ?> ! </p> -->
         </div>
         <div style = "margin-right: 2% !important; margin-left: 2% !important;">
             <br>

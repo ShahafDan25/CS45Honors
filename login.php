@@ -4,7 +4,7 @@
 <DOCYTPE! html>
 <html>
     <head>
-        <title>Admin</title>
+        <title>LPCRMP - Sign In</title>
 
         <!-- <link rel="shortcut icon" href="./The Market_files/lpcsgLogo.jpg"> -->
 
@@ -40,7 +40,7 @@
             <table class = "table">
                 <tbody>
                     <tr> 
-                        <td>Please Login by Clikc the LOGIN button</td>
+                        <td>Please Login by Click the LOGIN button</td>
                         <td style = "text-align: center;"> <button class = "btn btn-info" data-toggle = "collapse" data-target = "#login" aria-expanded="false"> LOG IN </button></td>
                     </tr>
                     <tr>
@@ -68,7 +68,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <br>
                     <input type = "hidden" name = "message" value = "logincheck">
                     <button class = "btn btn-success sidePadder5"> LOG IN </button>
                 </form>
@@ -103,10 +102,8 @@
                         </tbody>
                     </table>
                     <input type = "hidden" name = "message" value = "signup">
-                    <br>
                     <button class = "btn btn-success sidePadder5">SIGN UP</button>
                 </form>
-                
             </div>
 
 
@@ -152,7 +149,7 @@
             } 
             else if(event.target.value != pw1.value) 
             {
-                document.getElementById("checker").innerHTML = "password has to be 8 characters or more!";
+                document.getElementById("checker").innerHTML = "passwords have to match!";
                 pw2.style = "background-color: #FF9A9A !important;";
             }
             else 

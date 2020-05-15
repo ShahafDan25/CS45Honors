@@ -4,7 +4,7 @@
 <DOCYTPE! html>
 <html>
     <head>
-        <title>Admin</title>
+        <title>LPCRMP - Admin</title>
 
         <!-- <link rel="shortcut icon" href="./The Market_files/lpcsgLogo.jpg"> -->
 
@@ -77,7 +77,7 @@
                         </tr>
                         <tr>
                             <td> Enter Course's Units </td>
-                            <td><input type = "number" name = "units" placeholder = "  Course Units" class = "btn btn-input sm2" min = "0" max = "8" step = "0.5"></td>
+                            <td><input type = "number" name = "units" style = "width: 30% !important;" placeholder = "Units" class = "btn btn-input sm2" min = "0" max = "8" step = "0.5"></td>
                         </tr>
                     </tbody>
             </table>

@@ -5,7 +5,7 @@
 <DOCYTPE! html>
     <html>
         <head>
-            <title>LPC RMP (CS45 Honors)</title>
+            <title>LPCRMP Planner</title>
 
             <!-- <link rel="shortcut icon" href="./The Market_files/lpcsgLogo.jpg"> -->
 

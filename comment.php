@@ -14,7 +14,7 @@
 <DOCTYPE! html>
     <html>
         <head>
-            <title>Leave a Comment!</title>
+            <title>LPCRMP - Comment</title>
 
 
             <!-- Bootstrap for CSS -->
@@ -37,16 +37,14 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         </head>
         <div class = "cover">
-            
+            <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('index.php');"> HOME PAGE </button>
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
             <h1 class = "titler inline">LPC - RMP</h1>
         </div>
         <body class = "body">
-            <br>
-            <button class = "btn btn-info pull-left sideMargger5" onclick = backHome()> HOME PAGE </button>
-            <h2> Comment about your experience with <?php echo $prof; ?></h2> 
-            <br><hr class = "sep"><br>
+            <h2> Comment about your experience with <u> <?php echo $prof; ?> </u></h2> 
+            <hr class = "sep">
             <form action = "funcs.php" method = "post" class = "commentForm">
                 <label class="btn checkboxer">
                     <input type="checkbox" name = "annoStatus" value = "anno"> Comment Anonymously 
@@ -79,19 +77,28 @@
                 </table>
                 <br><hr class = "sep">
                 <p> Leave you feedback below! </p>
-                <textarea style = "border: 1px solid black; border-radius: 4px; width: 100% !important; padding: 2% !important;" placeholder = "Insert your comment here!" name = "comment"></textarea>
+                <textarea style = "border: 1px solid black; border-radius: 4px; width: 100% !important; padding: 2% !important;" id = "textplace" placeholder = "Insert your comment here!" name = "comment" maxlength = "250"></textarea>
+                <p id = "notifier"></p>
                 <input type = "hidden" name = "message" value = "commentary">
-                <br><br>
-                <button class = "btn btn-success"> SUBMIT </button>
+                <button class = "btn btn-success sidePadder5"> SUBMIT </button>
             </form>
             <br>
-            
         </body>
+        <footer class = "footer">
+        <p> <strong>Las Positas College | Academic Year 2020</strong></p>
+        <p> Special Thanks to the <u>www.thekomanetskys.com</u></p>
+        <p> Shahaf Dan Production (All rights reserved)</p>
+    </footer>
+    <script>
+        document.getElementById('nameCheck').onchange = function() 
+        {
+            document.getElementById('nameField').disabled = !this.checked;
+        };
+        var tp = document.getElementById("textplace");
+        tp.onkeyup = function(event){
+            if (event.target.value.length == 0) document.getElementById("notifier").innerHTML = "";
+            else document.getElementById("notifier").innerHTML = tp.value.length + " / 250";
+        }
+     </script>
     </html>
-        <script>
-            document.getElementById('nameCheck').onchange = function() 
-            {
-                document.getElementById('nameField').disabled = !this.checked;
-            };
-        </script>
-</DOCTYPE>
+        
