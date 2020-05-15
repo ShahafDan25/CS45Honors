@@ -8,6 +8,8 @@
     $id = $r['ID'];
     $f = $r['FirstName'];
     $l = $r['LastName'];
+    //set data for the score graph;
+    $data = popProfScoreGraph(connDB(), $id);
 ?>
 <DOCYTPE! html>
 <html>
@@ -35,7 +37,7 @@
     </head>
     
     <body class = "body">
-    <div class = "cover">
+        <div class = "cover">
             
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
@@ -52,6 +54,12 @@
                 <?php populateCommentTable(connDB()); ?>    
             </div>
         </div>
+        <br>
+        <h3> Average Rating Graph </h3>
+        <div class = "graphicalMorris">
+            <div id = "scoreGraph"><!-- GRAPH VIA JS --></div>
+        </div>
+        
     </body>
 
 
@@ -63,6 +71,19 @@
 
 
 
-    <script></script>
+    <script>
+        //average score graph (linear) 
+        Morris.Line({
+            element : 'scoreGraph', 
+            data:[<?php echo $data ?>], 
+            xkey: ['TIME'],
+            ykeys: ['SCORE'],
+            ymin: 'auto',
+            ymax: 'auto',
+            labels:['Average'],
+            hideHover:'auto',
+            stacked:true
+        });
+    </script>
 
 </html>

@@ -84,16 +84,20 @@
                                 <td><input type = "text" id = "zonemail" name = "zonemail" class = "btn btn-input" placeholder="  Zonemail Address"><p id = "emailchecker"></p></td>
                             </tr>
                             <tr>
-                                <th>Choose a Password</th>
-                                <td><input type = "text" id = "pw1" name = "pw1" class = "btn btn-input inline" placeholder="  Password">&nbsp;<p id = "checker"></td>
-                            </tr>
-                            <tr>
-                                <th>Verify Your Password</th>
-                                <td><input type = "text" id = "pw2" name = "pw2" class = "btn btn-input inline" placeholder="  Verify Password"><p id = "checker"></p></td>
+                                <th>Choose and Verify a Password</th>
+                                <td><input type = "text" id = "pw1" name = "pw1" class = "btn btn-input inline" placeholder="  Password">&nbsp;<input type = "text" id = "pw2" name = "pw2" class = "btn btn-input inline" placeholder="  Verify Password"><br><p id = "checker"><p id = "checker"></td>
                             </tr>
                             <tr>
                                 <th>Choose a Major</th>
-                                <td><select class = "btn browser-default inline sideMargger5 increaseHeight btn-input" name = "profSelected"><?php echo populateMajorDropdown(connDB());?></select></td>
+                                <td>
+                                <label class="btn checkboxer inline">
+                                    <input type="checkbox" name = "annoStatus" value = "UNDCL"> Undeclared 
+                                </label>
+                                <label class="btn checkboxer inline">
+                                    <input type="checkbox" class = "inline"  name = "annoStatus" id = "nameCheck"> Select Major
+                                </label>
+                                <select class = "btn sideMargger5 btn-input inline" id = "majorSelect" name = "major" style = "visibility: hidden"><?php echo populateMajorDropdown(connDB());?></select>
+                                </td>                                
                             </tr>
                         </tbody>
                     </table>
@@ -113,6 +117,10 @@
         <p> Shahaf Dan Production (All rights reserved)</p>
     </footer>
     <script>
+        document.getElementById("nameCheck").onchange = function() {
+            if(document.getElementById("majorSelect").style.visibility == "hidden") document.getElementById("majorSelect").style.visibility = "visible";
+            else document.getElementById("majorSelect").style.visibility = "hidden";
+        };
         var pw1 = document.getElementById("pw1");
         var pw2 = document.getElementById("pw2");
         var zonemail = document.getElementById("zonemail");
@@ -175,6 +183,9 @@
                 }
             }
         }
+       
+        
+    
     </script>
 
 </html>

@@ -374,8 +374,9 @@
     function populateCommentTable($c)
     {
         $colors = array("FF7E7E", "#FCA0A0", "#FCCEA0", "FCE0A0", "EFFF87", "#FCFCA0", "#CEFCA0", "#A0FCA0", "#A0FCCE", "#A0C3FC");
-        $sql = "SELECT Name, TEXT, DateTimeStamp, Rating FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1);";
-        $s = $c ->prepare($sql);
+        //based on index of rating, we will choose a color for the front end user interface: that took me a while to firgure out but looks really cool to my opinion
+        $sql = "SELECT Name, TEXT, DateTimeStamp, Rating FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1) LIMIT 12;";
+        $s = $c -> prepare($sql);
         $s -> execute();
         $foundData = false;
         $table = "";
@@ -397,7 +398,7 @@
             else $table .= '<tr><td>'.$r['Name'].'</td>';
             $table .= '<td><div style = "background-color: '.$colors[($r['Rating']-1)].' !important; border-radius:8px; border: 2px solid black; padding: 20% !important; text-align:center;">'.$r['Rating'].'</div></td>';
             $table .= '<td>'.$r['TEXT'].'</td>';
-            $table .= '<td>'.$r['DateTimeStamp'].'</td>';
+            $table .= '<td>'.substr($r['DateTimeStamp'],5,2).'.'.substr($r['DateTimeStamp'],8,2).'.'.substr($r['DateTimeStamp'],0,4).'</td>';
             $table .= '</tr>';
             $foundData = true;
         }
@@ -443,5 +444,26 @@
         if ($table == "") echo "<h5>No classes are on your record yet!</h5><br>";
         else $table .= "</tbody></table>"; echo $table;
         return;
+    }
+
+    function popProfScoreGraph($c, $prof)
+    {
+        $sql = "SELECT DateTimeStamp, Rating FROM Comments WHERE Instructors_ID = ".$prof.";";
+        $s = $c ->prepare($sql);
+        $s -> execute();
+        $counter = 0; $total = 0; $average = 0; //initializations
+        $r = $s -> fetch(PDO::FETCH_ASSOC);
+        $counter++;
+        $total += $r['Rating'];
+        $average = round(($total / $counter), 2); //to 2 decimal places!
+        $data = "{TIME:'".$r['DateTimeStamp']."', SCORE:'".$average."'}";
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $counter++;
+            $total += $r['Rating'];
+            $average = round(($total / $counter), 2); //to 2 decimal places!
+            $data .= ", {TIME:'".$r['DateTimeStamp']."', SCORE:'".$average."'}";
+        }
+        return $data;
     }
 ?>

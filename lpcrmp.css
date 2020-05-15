@@ -74,8 +74,8 @@
 .checkboxer
 {
     background-color: bisque;
-    padding-right: 1% !important;
-    padding-left: 1% !important;
+    padding-right: 2% !important;
+    padding-left: 2% !important;
     margin-right: 1% !important;
     margin-left: 1% !important;
 }
@@ -154,6 +154,18 @@
     background-repeat: no-repeat;
     background-position: center !important; 
     background-size: 100% !important;   
+}
+
+.graphicalMorris
+{
+    text-align: center !important;
+    border: 2px solid black !important;
+    border-radius: 5px !important;
+    padding: 1% !important;
+    margin-top: 1% !important;
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+    background-color: white !important;
 }
 
 /* ---------------------------------------------
