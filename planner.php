@@ -1,5 +1,6 @@
-<?php include "funcs.php";?>
-<?php session_start(); //session_abort()? wo;;; this be necessary at some point? ?>
+<?php  @ob_start(); 
+    session_start(); 
+    include "funcs.php"; ?>
 <?php $user = $_SESSION['user'];?>
 <DOCYTPE! html>
     <html>

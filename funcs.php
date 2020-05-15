@@ -86,8 +86,10 @@
     }
     if($_POST['message'] == "signup")
     {
-        userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']);
-        echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.php");</script>';
+        if(userSignUp(connDB(), $_POST['zonemail'], $_POST['pw2'], $_POST['major']))
+        {
+            echo '<script>alert("Sign Up Was Successful! Go Ahead and Log In Please");location.replace("login.php");</script>';
+        }
     }
 
     if($_POST['message'] == "planner")
@@ -188,10 +190,19 @@
     function userSignUp($c, $m, $p, $major)
     {
         //NOTE: c = connection, m = zonemail, p = password
-        $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."', '".$major."');";
-        $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $c->exec($sql);
-        return;
+        //structure: 
+        //if not zonemail: alert, locationReplace return false
+        //else:  insert, return true
+        if (substr((strlen($m) - 19), 19) != "zonemail.clpccd.edu") echo '<script>alert("Only zonemails can use this site!"); location.replace("login.php");</script>';
+        else
+        {
+            $sql = "INSERT INTO Credentials VALUES ('".$m."', '".$p."', '".$major."');";
+            $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $c->exec($sql);
+            return true;
+        }
+        return false;
+        
     }
 
     function courseLog($c, $subject, $number, $prof, $term, $year)

@@ -1,5 +1,6 @@
-<?php @ob_start(); session_start() ?>
-<?php include "funcs.php";?> 
+<?php  @ob_start(); 
+    session_start(); 
+    include "funcs.php"; ?>
 <DOCYTPE! html>
 <html>
     <head>
@@ -28,8 +29,8 @@
     <!-- <body class = "container"> -->
     <body class = "body">
         <div class = "cover">            
-            <h1 class = "titler inline left">LPC - RMP</h1> &nbsp;
             <img src = "graphics/lpclogo1.png" class = "lpcLogo inline right"> &nbsp; &nbsp;
+            <h1 class = "titler inline">LPC - RMP</h1>
         </div>
         <div>
             <br>

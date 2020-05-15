@@ -1,4 +1,6 @@
-<?php include "funcs.php"; ?>
+<?php  @ob_start(); 
+    session_start(); 
+    include "funcs.php"; ?>
 <DOCYTPE! html>
     <html>
         <head>
@@ -65,7 +67,7 @@
                                 <tr>
                                     <td style = "text-align: center;"><strong>PLAN </strong></td> 
                                     <td> Create an organized cademic planner for your academic path at Las Positas College</td>
-                                    <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#planner" aria-expanded="false"> Click Here! </button></td>
+                                    <td><button class = "btn btn-warning" onclick = "location.replace('planner.php');"> Click Here! </button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -100,24 +102,6 @@
                                 <input type = "hidden" name = "message" value = "readAboutProf">
                                 <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
                             </form>
-                        </div>
-                    </div>
-                    <div id = "planner" class = "collapse centrize">
-                        <div class = "framer w60">
-                            <br>
-                            <h4> Login to Academic Planner </h4>
-                            <form action = "funcs.php" method = "post">
-                                <table class = "table">
-                                    <tbody>
-                                        <tr>
-                                            <th>Please Enter your Zonemail Address</th>
-                                            <td><input type = "text" name = "zonemail" class = "btn btn-input" placeholder = "  Zonemail"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <input type = "hidden" name = "message" value = "planner">
-                                <button class = "btn btn-success sidePadder5 sideMargger5 inline">SUBMIT </button>
-                            </form> 
                         </div>
                     </div>
                 <br>

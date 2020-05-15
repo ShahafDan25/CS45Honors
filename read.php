@@ -1,4 +1,6 @@
-<?php include "funcs.php"?>
+<?php  @ob_start(); ?>
+<?php session_start(); ?>
+<?php include "funcs.php"; ?>
 <?php
     $c = connDB();
     $sql = "SELECT ID, FirstName, LastName FROM Instructors WHERE Reader = 1";
@@ -45,6 +47,7 @@
 
             <h1 class = "titler inline">LPC - RMP</h1>
             <hr class = "sep" size = "10">
+            <p> Welcome <?php echo $_SESSION['user'] ?> ! </p>
         </div>
         <div style = "margin-right: 2% !important; margin-left: 2% !important;">
             <br>

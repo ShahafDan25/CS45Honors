@@ -1,4 +1,6 @@
-<?php include "funcs.php"; ?>
+<?php  @ob_start(); 
+    session_start(); 
+    include "funcs.php"; ?>
 <?php
     $sql = "SELECT ID, FirstName, LastName FROM Instructors WHERE Comment = 1"; //there has to be a professor
     $c = connDB();
@@ -39,7 +41,6 @@
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
             <h1 class = "titler inline">LPC - RMP</h1>
-            <hr class = "sep" size = "10">
         </div>
         <body class = "body">
             <br>

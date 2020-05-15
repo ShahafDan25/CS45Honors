@@ -1,7 +1,6 @@
-
-   <?php
-   function connDB() 
-   {
+<?php
+function connDB() 
+{
         //CONNECTION ESTABLISHMENT TO LOCAL HOST
         $username = "root";
         $password = "MMB3189@A";
@@ -14,5 +13,4 @@
         } // end of try and catch
         return $conn;
     }
-
-    ?>
+?>

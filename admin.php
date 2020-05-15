@@ -1,3 +1,5 @@
+<?php  @ob_start(); ?>
+<?php session_start(); ?>
 <?php include "funcs.php"; ?>
 <DOCYTPE! html>
 <html>
@@ -27,7 +29,6 @@
         <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('index.php');"> HOME PAGE </button>
         <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.php');"> LOGIN PAGE </button>
         <h1 class = "titler inline">LPC - RMP</h1>
-        <hr class = "sep" size = "10">
     </div>
     <body class = "body">
         <br><br>
