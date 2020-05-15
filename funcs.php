@@ -19,15 +19,15 @@
         $a = "";
         if($_POST['annoStatus'] == "anno") $a = "Anonymous";
         else $a = $_POST['commenterName'];
-        $subject = $_POST['subjectTaken'];
         $class = $_POST['courseTaken'];
         $term = $_POST['termTaken'];
         $year = $_POST['yearTaken'];
         $grade = $_POST['grade'];
         $comment = $_POST['comment'];
+        $rating = $_POST['ratings'];
         date_default_timezone_set("America/Los_Angeles"); /// set time zone
         $datetimestamp = date ("Y-m-d H:i:s"); //current time in that time zone
-        comment(connDB(), $grade, $comment, $a, $term, $year, $datetimestamp, $subject, $class);
+        comment(connDB(), $grade, $comment, $a, $term, $year, $datetimestamp, $class, $rating);
         echo '<script>alert("Comment Succesfully Stored!");location.replace("index.php");</script>';
     }
 
@@ -84,7 +84,7 @@
     // ---------- FUNCTIONS -------------- //
     // ----------------------------------- //
     
-    function comment($c, $g, $text, $a, $t, $y, $dt, $subject, $course)
+    function comment($c, $g, $text, $a, $t, $y, $dt, $course, $rating)
     {
         $sql1 = "SELECT ID FROM Instructors WHERE Comment = 1";
         $s = $c -> prepare($sql1);
@@ -96,7 +96,7 @@
         $s -> execute();
         $max = $s -> fetchColumn();
 
-        $sql = "INSERT INTO Comments (ID, Grade, TEXT, Name, Term, Year, DateTimeStamp, Courses_Number, Courses_Subjects_Code, Instructors_ID) VALUES (".$max.",'".$g."', '".$text."', '".$a."', '".$t."', ".$y.", '".$dt."', ".$course.", '".$subject."', ".$idi.");";
+        $sql = "INSERT INTO Comments (ID, Grade, TEXT, Name, Term, Year, DateTimeStamp, Courses_Number, Courses_Subjects_Code, Instructors_ID, Rating) VALUES (".$max.",'".$g."', '".$text."', '".$a."', '".$t."', ".$y.", '".$dt."', ".$course.", (SELECT Subjects_Code FROM Instructors WHERE comment = 1), ".$idi.", ".$rating.");";
 
         $c->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $c -> exec($sql);
@@ -180,8 +180,19 @@
 
 
     /// ----------------- POPULATORS ---------------------///
-    
-    function populateALlSubjects($c)
+    function populateCoursesForProf($c)
+    {
+        $sql = "SELECT Subjects_Code, Number, Name FROM Courses WHERE Subjects_Code = (SELECT Subjects_Code FROM Instructors WHERE Comment = 1);";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        $data = "";
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            $data .= '<option value = '.$r["Number"].'>'.$r['Subjects_Code'].$r['Number'].' [ '.$r["Name"].' ] </option>';
+        }
+        return $data;
+    }
+    function populateAllSubjects($c)
     {
         $data = "";
         $sql = "SELECT * FROM Subjects";
@@ -302,14 +313,35 @@
         $sql = "SELECT Name, TEXT, DateTimeStamp FROM Comments WHERE Instructors_ID = (SELECT ID FROM Instructors WHERE Reader = 1);";
         $s = $c ->prepare($sql);
         $s -> execute();
+        $foundData = false;
         $table = "";
         while($r = $s -> fetch(PDO::FETCH_ASSOC))
         {
+            if(!$foundData)
+            {
+                $table .= "<table class = 'table'>
+                <thead>
+                    <th> Feedbacker: </th>
+                    <th> Comment: </th>
+                    <th> Date </th>
+                </thead>
+                <tbody>";
+            }
             $table .= '<tr><td>'.$r['Name'].'</td>';
             $table .= '<td>'.$r['TEXT'].'</td>';
             $table .= '<td>'.$r['DateTimeStamp'].'</td>';
             $table .= '</tr>';
+            $foundData = true;
         }
-        echo $table;
+        if ($table == "") 
+        {
+            echo '<h5>No feedback was recorded for this instructor yet</h5><br>';
+        }
+        else
+        {   
+            $table .= '</tbody></table>';
+            echo $table;
+        }
+        return;
     }
 ?>

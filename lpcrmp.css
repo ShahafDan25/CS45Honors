@@ -4,7 +4,8 @@
     background-color: rgba(193,66,66, 0.82);
     padding-bottom: 2% !important;
     margin-bottom: 1% !important;
-
+    border-bottom: 4px solid black !important;
+    width: 100% !important;
 }
 .titler
 {
@@ -21,7 +22,7 @@
     padding-right: 2% !important;
     padding-left: 2% !important;
 }
-body
+.body
 {
     background-image: linear-gradient(  rgb(235, 154, 154), rgb(207, 73, 73)) !important;
     text-align: center;
@@ -163,4 +164,15 @@ body
     padding-left: 3% !important;
     padding-top: 1.5% !important;
     
+}
+.container
+{
+    height: 100% !important;
+    background: url('graphics/lpccampus.jpeg') !important; 
+    text-align: center !important; 
+    width: 100% !important;
+    background-position: center !important; 
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important; 
+    background-attachment: fixed !important;
 }

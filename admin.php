@@ -29,7 +29,7 @@
         <h1 class = "titler inline">LPC - RMP</h1>
         <hr class = "sep" size = "10">
     </div>
-    <body>
+    <body class = "body">
         <br><br>
         <h2> ADMIN PAGE </h2><br>
         <h4> ACTIVITIES ONLY THE ADMIN CAN DO</h4>
@@ -60,13 +60,23 @@
             <h3>INSERT A NEW CLASS TO THE DATABASE</h3>
             <br>
             <form action = "funcs.php" method = "post" class = "commentForm">
-                <select class = "btn btn-input" name = "subject">
-                    <option>SUBJECTS</option>
-                    <?php echo populateMajorDropdown(connDB());?>
-                </select>
-                <br><br>
-                <input type = "text" name = "courseNumber" placeholder="  Course Number" class = "btn btn-input sm2">
-                <input type = "text" name = "courseName" placeholder = "  Class Name" class = "btn btn-input sm2"><br>
+            <table class = "table">
+                    <tbody> 
+                        <tr>
+                            <td>Select a Subject</td>
+                            <td><select class = "btn btn-input" name = "subject"><?php echo populateMajorDropdown(connDB());?></select></td>
+                        </tr>
+                        <tr>
+                            <td>Enter Course's Number </td>
+                            <td><input type = "text" name = "courseNumber" placeholder="  Course Number" class = "btn btn-input sm2"></td>
+                        </tr>
+                        <tr>
+                            <td> Enter Course's Name </td>
+                            <td><input type = "text" name = "courseName" placeholder = "  Class Name" class = "btn btn-input sm2"></td>
+                        </tr>
+                    </tbody>
+            </table>
+            <br>
                 <input type = "hidden" name = "message" value = "insertNewCourse"><br>
                 <button class = "btn btn-success sidePadder5">SUBMIT</button>
             </form>

@@ -41,7 +41,7 @@
             <h1 class = "titler inline">LPC - RMP</h1>
             <hr class = "sep" size = "10">
         </div>
-        <body>
+        <body class = "body">
             <br>
             <button class = "btn btn-info pull-left sideMargger5" onclick = backHome()> HOME PAGE </button>
             <h2> Comment about your experience with <?php echo $prof; ?></h2> 
@@ -59,12 +59,8 @@
                 <table class = "table framer" style = "margin: 0px !important;">
                     <tbody>
                         <tr>
-                            <td>Select A Subject </td>
-                            <td><select name = "subjectTaken" class = "inline sideMargger5 btnSelect" required><?php echo populateMajorDropdown($c); ?></select></td>
-                        </tr>
-                        <tr>
                             <td>Select A Course </td>
-                            <td> <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required><?php echo populateChosenSubjectNumber($c); ?></select></td>
+                            <td> <select name = "courseTaken" class = "inline sideMargger5 btnSelect" required><?php echo populateCoursesForProf($c); ?></select></td>
                         </tr>
                         <tr>
                             <td>Select An Academic Term and Year</td>

@@ -33,6 +33,8 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     </head>
+    
+    <body class = "body">
     <div class = "cover">
             
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('admin.php');"> ADMIN </button>
@@ -42,22 +44,13 @@
             <h1 class = "titler inline">LPC - RMP</h1>
             <hr class = "sep" size = "10">
         </div>
-    <body>
-        <div class = "container">
+        <div style = "margin-right: 2% !important; margin-left: 2% !important;">
             <br>
             <h1> Welcome !</h1>
             <h4> Here are some of the comments other students left about <u>Professor <?php echo $f.' '.$l;?></u></h4>
-
-            <table class = "table commentTable">
-                <thead>
-                    <th> Feedbacker: </th>
-                    <th> Comment: </th>
-                    <th> Date </th>
-                </thead>
-                <tbody>
-                    <?php populateCommentTable(connDB()); ?>
-                </tbody>
-            </table>
+            <div class = "commentTable">
+                <?php populateCommentTable(connDB()); ?>    
+            </div>
         </div>
     </body>
 

@@ -32,7 +32,9 @@
             <button class = "sm2 sp2 btn btn-info inline pull-left" onclick = "location.replace('login.html');"> LOGIN PAGE </button>
             <h1 class = "titler inline">LPC - RMP</h1>
         </div>
-        <body>
+        <!-- <body class = "container"> -->
+        <body class = "body">
+            
             <div class = "lowerBody">
             <h2><strong><u> Rate My Professor </u></strong></h2>
                 <h4> Las Positas College </h4> 
@@ -51,17 +53,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Leave Feedback</td> 
-                                    <td> Comment abou your expeirnec with one of your instructors! </td>
+                                    <td style = "text-align: center;"><strong>COMMENT</strong></td> 
+                                    <td> Leave some feedback about your expeirnce with one of your instructors! </td>
                                     <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#leaveFeedback"> Click Here! </button></td>
                                 </tr>
                                 <tr>
-                                    <td>Read Feedbacks</td> 
-                                    <td> Read the commens other students has to share about a specific instructor! </td>
+                                    <td style = "text-align: center;"><strong>READ</strong></td> 
+                                    <td> Read the feedbacks other students has to share about a specific instructor! </td>
                                     <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#readFeedback" aria-expanded="false"> Click Here! </button></td>
                                 </tr>
                                 <tr>
-                                    <td>Plan Ahead</td> 
+                                    <td style = "text-align: center;"><strong>PLAN </strong></td> 
                                     <td> Create an organized cademic planner for your academic path at Las Positas College</td>
                                     <td><button class = "btn btn-warning" data-toggle = "collapse" data-target = "#planner" aria-expanded="false"> Click Here! </button></td>
                                 </tr>
