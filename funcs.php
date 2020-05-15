@@ -117,7 +117,7 @@
         // var_dump("user: ".$_SESSION['user']);
         $user = $_SESSION['user'];
         pdf_report(connDB(), $user);
-        //echo '<script>location.replace("planner.php");</script>';
+        echo '<script>location.replace("planner.php");</script>';
     }
     // ----------------------------------- //
     // ---------- FUNCTIONS -------------- //
@@ -222,7 +222,7 @@
         //structure: 
         //if not zonemail: alert, locationReplace return false
         //else:  insert, return true
-        if (substr((strlen($m) - 19), 19) != "zonemail.clpccd.edu") echo '<script>alert("Only zonemails can use this site!"); location.replace("login.php");</script>';
+        if (substr($m, (strlen($m) - 19), 19) != "zonemail.clpccd.edu") echo '<script>alert("Only zonemails can use this site!"); location.replace("login.php");</script>';
         else
         {
             $sql = "INSERT INTO Credentials VALUES ('".$m."', md5('".$p."'), '".$major."');";
@@ -503,6 +503,42 @@
             $average = round(($total / $counter), 2); //to 2 decimal places!
             $data .= ", {TIME:'".$r['DateTimeStamp']."', SCORE:'".$average."'}";
         }
+        return $data;
+    }
+
+    function popGpaGraph($c, $user)
+    {
+        //idea: two inner sql statements (embedded)
+        //first for year and term
+        //second (inner one) for gpa calculations per each term/year
+        $sql = "SELECT Term, Year FROM StudCourse WHERE Stud_Zonemail = '".$user."' ORDER BY Year;";
+        $s = $c -> prepare($sql);
+        $s -> execute();
+        while($r = $s -> fetch(PDO::FETCH_ASSOC))
+        {
+            //next: embed the inner sql statement to calc gpa per semester;
+            $sql2 = "SELECT sc.Grade, c.Units FROM Courses c JOIN StudCourse sc ON c.Number = sc.Courses_Number WHERE sc.Stud_Zonemail = '".$user."';";
+            $s2 = $c -> prepare($sql2);
+            $s -> execute();
+            $totalUnits = 0; //niitiatlize variables to calculate the GPA per term
+            $totalIndValue = 0;
+            while ($r2 = $s2 -> fetch(PDO::FETCH_ASSOC))
+            {
+                $totalUnits += $r2['Units'];
+                $value = 0;
+                if($r2['Grade'] == 'A') $value = 4;
+                elseif ($r2['Grade'] == 'B') $value = 3;
+                elseif($r2['Grade'] == 'C') $value = 2;
+                elseif ($r2['Grade'] == 'D') $value = 1;
+                elseif ($r2['Grade'] == 'W') $totalUnits -= $r['Units'];
+                else $value = 0;
+                $totalIndValue += ($r['Units'] * $value);
+            }
+            $termGPA = round((($totalIndValue/$totalUnits)), 2);
+            $data = "{SEMESTER:'".$r['Term']." ".$r['Year']."', GPA:'".$termGPA."'}, ";
+        }
+        //next: remove the last comma for snytax corrections
+        $data = substr($data, 0, strlen($data) - 2);//cut the last two characters (remove a space and a comma)
         return $data;
     }
 ?>

@@ -78,8 +78,9 @@
                     </form>
                     <hr class = "sep">
                     <h3> Cumulative GPA: <?php echo calcGPA(connDB(), $user); ?></h3>
-                    <div id = "gpaGraph">
-                        <!-- POPULATE GRAPH PER ACADEMIC TERM WITH MORRIS JS -->
+                    <?php //$data = popGpaGraph(connDB(), $user); ?> 
+                    <div class = "graphicalMorris">
+                        <div id = "gpaGraph"><!-- GRAPH VIA JS --></div>
                     </div>
                 </div>
             </div>
@@ -89,4 +90,18 @@
             <p> Special Thanks to the <u>www.thekomanetskys.com</u></p>
             <p> Shahaf Dan Production (All rights reserved)</p>
         </footer>
+        <script>
+        //average score graph (linear) 
+            Morris.Line({
+                element : 'gpaGraph', 
+                data:[<?php echo $data ?>], 
+                xkey: 'SEMESTER',
+                ykeys: ['GPA'],
+                ymin: '2.0',
+                ymax: '4.0',
+                labels:['GPA'],
+                hideHover:'auto',
+                stacked:true
+            });
+    </script>
     </html>
